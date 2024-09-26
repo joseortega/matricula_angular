@@ -1,0 +1,54 @@
+<mat-card>
+    <mat-card-content>
+        <form class="form-field-full" [formGroup]="estudianteRepresentanteForm" (ngSubmit)="submit()">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <mat-form-field class="full-width">
+                            <mat-label>Seleccione el Representante</mat-label>
+                            <input type="text"
+                                 placeholder="Escriba su identificacion, nombre o apellidos"
+                                 aria-label="Number"
+                                 matInput
+                                 formControlName="representante"
+                                 [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                @for (representante of filteredRepresentantes | async; track representante) {
+                                  <mat-option [value]="representante">{{representante.identificacion}} {{representante.nombres}} {{representante.apellidos}}</mat-option>
+                                }
+                            </mat-autocomplete>
+                            @if(estudianteRepresentanteForm.get('representante')?.value?.id && !isInputRepresentanteDisabled){
+                                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectRepresentante()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            }
+                        </mat-form-field>
+
+                        <button mat-icon-button type="button" (click)="newRepresentante()" class="add-button" [disabled]="estudianteRepresentanteForm.get('representante')?.value?.id">
+                            <mat-icon>add</mat-icon>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            <mat-form-field>
+                    <mat-label>Parentesco</mat-label>
+                    <mat-select formControlName="parentesco" [compareWith]="compareObjects">
+                      @for (parentesco of parentescos$ | async; track parentesco) {
+                        <mat-option [value]="parentesco">{{parentesco.descripcion}}</mat-option>
+                      }
+                    </mat-select>
+                    @if(estudianteRepresentanteForm.get('parentesco')?.hasError('required')){
+                        <mat-error>
+                            Parentesco es requerida
+                        </mat-error>
+                    }
+            </mat-form-field>
+            <mat-slide-toggle formControlName="es_principal">Establecer como principal</mat-slide-toggle>
+            <div class="d-flex justify-content-end">
+                <button mat-raised-button color="primary" [disabled]="!estudianteRepresentanteForm.valid">Guardar</button>
+            </div>
+        </form>
+    </mat-card-content>    
+</mat-card>
+

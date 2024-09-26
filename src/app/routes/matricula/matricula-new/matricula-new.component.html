@@ -1,0 +1,89 @@
+<page-header title="Matriculas" subtitle="Nueva Matricula" ></page-header>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Informacion del Estudiante">
+        <ng-template matTabContent>
+            <div class="tab-content">
+                <mat-card>
+                    <mat-card-content>
+                            @if(!matricula.id){
+                                <app-estudiante-search
+                                    [estudiante]="matricula.estudiante"
+                                    (selectEstudianteEvent)="selectEstudiante($event)">
+                                </app-estudiante-search>
+                            }
+                            @else{
+                                <app-estudiante-search
+                                    [isInputSearchDisabled]="true"
+                                    [estudiante]="matricula.estudiante"
+                                    (selectEstudianteEvent)="selectEstudiante($event)">
+                                </app-estudiante-search>
+                            }
+                    </mat-card-content>
+                </mat-card>
+                @if(matricula.estudiante.id){
+                    <app-estudiante-show
+                        [estudiante]="matricula.estudiante"
+                        (updateEstudianteEvent)="updateEstudiante($event)">>
+                    </app-estudiante-show>
+                }
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab #matricula.estudiante.id [disabled]='!matricula.estudiante.id' label="Informacion del Representante">
+        <ng-template matTabContent>
+            <div class="tab-content">
+                <app-estudiante-representante-list
+                    [estudiante]="matricula.estudiante">
+                </app-estudiante-representante-list>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab #matricula.estudiante.id [disabled]='!matricula.estudiante.id' label="Datos de Matrícula">
+        <ng-template matTabContent>
+            <div class="tab-content">
+                <mat-card>
+                    <mat-card-content>
+                        <mat-card-title>
+                          Estudiante: {{matricula.estudiante.identificacion}}  / {{matricula.estudiante.nombres}} {{matricula.estudiante.apellidos}}
+                        </mat-card-title>
+                    </mat-card-content>
+                </mat-card>
+                  @if(matricula.id && !isEditMode){
+                    <app-matricula-show
+                      [matricula]="matricula"
+                      (editMatriculaEvent)="editMatricula($event)">
+                    </app-matricula-show>
+                  } @else {
+                    <app-matricula-form
+                      [matricula]="matricula"
+                      (submittedEvent)="onSubmitted($event)">
+                    </app-matricula-form>
+                  }
+            </div>
+        </ng-template>
+    </mat-tab>
+  <mat-tab #matricula.estudiante.id [disabled]='!matricula.estudiante.id' label="Revision de Expediente">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <app-expediente>
+
+        </app-expediente>
+      </div>
+
+    </ng-template>
+
+  </mat-tab>
+  <mat-tab #matricula.estudiante.id [disabled]='!matricula.estudiante.id' label="Finalizar Matricula">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <h1>
+          Descargar PDF
+        </h1>
+        <button mat-button (click)="pdf()">Descargar PDF</button>
+      </div>
+
+    </ng-template>
+
+  </mat-tab>
+</mat-tab-group>
+

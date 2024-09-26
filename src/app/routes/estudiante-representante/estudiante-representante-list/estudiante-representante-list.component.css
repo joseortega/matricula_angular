@@ -1,0 +1,57 @@
+.search-container {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 20px;
+  box-sizing: border-box;
+}
+
+.search-input {
+  flex: 1;
+  margin-right: -4px; /* Ajusta este valor para asegurar que el botón y el input estén alineados */
+}
+
+.save-button {
+  margin-left: 6px; /* Ajusta este valor según sea necesario */
+}
+
+/*------------------------------------------*/
+/*Notification Color*/
+/* styles.css o styles.scss */
+.snack-bar-success {
+  background-color: #4caf50; /* Verde para success */
+  color: #fff;
+}
+
+.snack-bar-error {
+  background-color: #f44336; /* Rojo para error */
+  color: #fff;
+}
+
+/*------------------------------------------*/
+
+/*Card con edit button*/ 
+.whit-icon-edit-card {
+  position: relative;
+}
+
+.edit-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10; /* Asegura que el botón esté por encima de otros elementos */
+}
+
+/*acordion*/
+.example-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}

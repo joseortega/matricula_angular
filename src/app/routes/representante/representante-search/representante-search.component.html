@@ -1,0 +1,21 @@
+<div class="row form-field-full">
+    <mat-form-field>
+        <mat-label>Seleccione el Representante</mat-label>
+        <input type="text"
+             placeholder="Escriba su identificacion, nombre o apellidos"
+             aria-label="Number"
+             matInput
+             [formControl]="representanteControl"
+             [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            @for (representante of filteredRepresentantes | async; track representante) {
+              <mat-option [value]="representante" (onSelectionChange)="onSelectRepresentante(representante)">{{representante.identificacion}} {{representante.nombres}} {{representante.apellidos}}</mat-option>
+            }
+        </mat-autocomplete>
+        @if(representante.id){
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectRepresentante()">
+                <mat-icon>close</mat-icon>
+            </button>
+        }
+    </mat-form-field>
+</div>

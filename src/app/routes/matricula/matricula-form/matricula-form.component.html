@@ -1,0 +1,100 @@
+<mat-card>
+    <mat-card-content>
+        <form class="form-field-full" [formGroup]="matriculaForm" (ngSubmit)="submit()">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field>
+                        <mat-label>Fecha de Matricula</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="fecha">
+                        <mat-hint>YYYY-MM-DD</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field>
+                        <mat-label>Seleccione la Modalidad</mat-label>
+                        <mat-select formControlName="modalidad" [compareWith]="compareObjects">
+                          @for (modalidad of modalidades$ | async; track modalidad) {
+                            <mat-option [value]="modalidad">{{modalidad.descripcion}}</mat-option>
+                          }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field>
+                        <mat-label>Seleccione el Periodo lectivo</mat-label>
+                        <mat-select formControlName="periodo_lectivo" [compareWith]="compareObjects">
+                          @for (periodo_lectivo of periodo_lectivos$ | async; track periodo_lectivo) {
+                            <mat-option [value]="periodo_lectivo">{{periodo_lectivo.descripcion}}</mat-option>
+                          }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field>
+                        <mat-label>Seleccione la Jornanda</mat-label>
+                        <mat-select formControlName="jornada" [compareWith]="compareObjects">
+                          @for (jornada of jornadas$ | async; track jornada) {
+                            <mat-option [value]="jornada">{{jornada.descripcion}}</mat-option>
+                          }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field>
+                        <mat-label>Seleccione el Grado Escolar</mat-label>
+                        <mat-select formControlName="grado_escolar" [compareWith]="compareObjects">
+                          @for (grado_escolar of grado_escolares$  | async; track grado_escolar) {
+                            <mat-option [value]="grado_escolar">{{grado_escolar.descripcion}}</mat-option>
+                          }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field>
+                        <mat-label>Seleccione el Paralelor</mat-label>
+                        <mat-select formControlName="paralelo" [compareWith]="compareObjects">
+                          @for (paralelo of paralelos$  | async; track paralelo) {
+                            <mat-option [value]="paralelo">{{paralelo.descripcion}}</mat-option>
+                          }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estado" required>
+                  @for (estado of estados; track estado) {
+                    <mat-option [value]="estado">{{estado}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Observación</mat-label>
+                <textarea matInput placeholder="Escriba cualquier observación, Ej. Falta doc" formControlName="observacion"></textarea>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+            <div class="d-flex justify-content-end">
+                <button mat-stroked-button color="primary" [disabled]="!matriculaForm.valid">Guardar</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+

@@ -1,0 +1,8 @@
+<h2 class="mat-h2" mat-dialog-title>Datos del Estudiante</h2>
+<mat-dialog-content>
+    <app-estudiante-form [estudiante]="estudiante" (submittedEvent)="onSubmitted($event)"></app-estudiante-form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

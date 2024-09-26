@@ -1,0 +1,11 @@
+/*Card con edit button*/
+.whit-icon-edit-card {
+  position: relative;
+}
+
+.edit-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10; /* Asegura que el botón esté por encima de otros elementos */
+}

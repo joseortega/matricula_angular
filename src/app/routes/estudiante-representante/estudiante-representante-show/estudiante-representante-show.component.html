@@ -1,0 +1,39 @@
+<mat-card>
+    <button mat-icon-button aria-label="Nuevo" class="edit-button" (click)="delete()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <mat-card-header>
+        <h3 class="mat-h3">
+            {{estudianteRepresentante.representante.apellidos}} {{estudianteRepresentante.representante.nombres}}
+
+                @if(estudianteRepresentante.es_principal === true){
+                    <span>(Principal)</span>
+                }
+
+        </h3>
+    </mat-card-header>
+    <mat-card-content>
+            @if(!isEditing){
+                <mat-card>
+                    <button mat-icon-button aria-label="Edit" class="edit-button" (click)="edit()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <mat-card-content>
+                        <p>
+                            Parentesco: {{estudianteRepresentante.parentesco.descripcion}}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            }@else{
+                <app-estudiante-representante-new
+                    [isInputRepresentanteDisabled]="true"
+                    [estudianteRepresentante] = "estudianteRepresentante"
+                    (newEstudianteRepresentanteEvent)="updateEstudianteRepresentante($event)">
+                </app-estudiante-representante-new>
+            }
+        <app-representante-show
+            (updateRepresentanteEvent)="updateRepresentante($event)"
+            [representante]="estudianteRepresentante.representante">
+        </app-representante-show>
+    </mat-card-content>
+</mat-card>

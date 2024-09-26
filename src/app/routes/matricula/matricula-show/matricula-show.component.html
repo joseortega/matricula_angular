@@ -1,0 +1,49 @@
+<mat-card class="whit-icon-edit-card">
+  <button mat-icon-button aria-label="Editar" class="edit-button" (click)="editMatricula()">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-sm-6">
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.fecha}}</span>
+            <span matListItemLine>Fecha</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.periodo_lectivo.descripcion}}</span>
+            <span matListItemLine>Periodo Lectivo</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.modalidad.descripcion}}</span>
+            <span matListItemLine>Modalidad</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.estado}}</span>
+            <span matListItemLine>Estado de Matricula</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="col-sm-6">
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.jornada.descripcion}}</span>
+            <span matListItemLine>Jornada</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.grado_escolar.descripcion}}</span>
+            <span matListItemLine>Grado Escolar</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.paralelo.descripcion}}</span>
+            <span matListItemLine>Paralelo</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.observacion}}</span>
+            <span matListItemLine>Observacion</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

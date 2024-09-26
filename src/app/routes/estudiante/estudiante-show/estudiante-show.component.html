@@ -1,0 +1,61 @@
+<mat-card class="whit-icon-edit-card">
+    <button mat-icon-button aria-label="Editar" class="edit-button" (click)="editEstudiante()">
+        <mat-icon>edit</mat-icon>
+    </button>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-sm-6">
+               <mat-list>
+                  <mat-list-item>
+                    <span matListItemTitle>{{estudiante.identificacion}}</span>
+                    <span matListItemLine>Identificacion</span>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <span matListItemTitle>{{estudiante.nombres}}</span>
+                    <span matListItemLine>Nombres</span>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <span matListItemTitle>{{estudiante.apellidos}}</span>
+                    <span matListItemLine>Apellidos</span>
+                  </mat-list-item>
+                  <mat-list-item>
+                      <span matListItemTitle>{{estudiante.fecha_nacimiento}}</span>
+                      <span matListItemLine>Fecha Nacimiento</span>
+                  </mat-list-item>
+                 <mat-list-item>
+                   <span matListItemTitle>{{estudiante.sexo}}</span>
+                   <span matListItemLine>Sexo</span>
+                 </mat-list-item>
+              </mat-list>
+            </div>
+            <div class="col-sm-6">
+                 <mat-list>
+                    <mat-list-item>
+                      <span matListItemTitle>{{estudiante.nacionalidad.descripcion}}</span>
+                      <span matListItemLine>Nacionalidad</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <span matListItemTitle>{{estudiante.telefono}}</span>
+                      <span matListItemLine>Telefono</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <span matListItemTitle>{{estudiante.correo}}</span>
+                      <span matListItemLine>Correo</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      @if(estudiante.tiene_discapacidad===true){
+                        <span matListItemTitle>Si</span>
+                      } @else {
+                        <span matListItemTitle>No</span>
+                      }
+                      <span matListItemLine>Tiene discapacidad</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                     <span matListItemTitle>{{estudiante.uniforme_talla?.descripcion}}</span>
+                     <span matListItemLine>Talla de Uniforme</span>
+                    </mat-list-item>
+              </mat-list>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

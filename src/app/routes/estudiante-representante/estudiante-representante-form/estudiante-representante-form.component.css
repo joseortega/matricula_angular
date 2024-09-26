@@ -1,0 +1,14 @@
+.input-group {
+    display: flex;
+    align-items: flex-start; /* Alinea verticalmente al centro */
+}
+
+.input-group mat-form-field {
+    flex: 1;
+}
+
+.add-button {
+    display: flex;
+    align-items: flex-start; /* Centra el contenido del botón */
+    margin-left: 8px;
+}

@@ -1,0 +1,41 @@
+<mat-card class="whit-icon-edit-card">
+    <button mat-icon-button aria-label="Editar" class="edit-button" (click)="editRepresentante()">
+        <mat-icon>edit</mat-icon>
+    </button>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-sm-6">
+               <mat-list>
+                    <mat-list-item>
+                      <span matListItemTitle>{{representante.identificacion}}</span>
+                      <span matListItemLine>Identificacion</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <span matListItemTitle>{{representante.nombres}}</span>
+                      <span matListItemLine>Nombres</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <span matListItemTitle>{{representante.apellidos}}</span>
+                      <span matListItemLine>Apellidos</span>
+                    </mat-list-item>
+              </mat-list>
+            </div>
+            <div class="col-sm-6">
+                 <mat-list>
+                    <mat-list-item>
+                      <span matListItemTitle>{{representante.lugar_residencia}}</span>
+                      <span matListItemLine>Lugar Residencia</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <span matListItemTitle>{{representante.telefono}}</span>
+                      <span matListItemLine>Telefono</span>
+                    </mat-list-item>
+                     <mat-list-item>
+                      <span matListItemTitle>{{representante.correo}}</span>
+                      <span matListItemLine>Correo</span>
+                    </mat-list-item>
+              </mat-list>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
