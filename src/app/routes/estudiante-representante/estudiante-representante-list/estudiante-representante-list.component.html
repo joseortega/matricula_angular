@@ -7,17 +7,8 @@
 
 <p></p>
 
-<mat-accordion class="example-headers-align" multi="false">
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>Agregar Representante </mat-panel-title>
-            <mat-panel-description>
-                Aga click para expanir o contrae
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <app-estudiante-representante-new
-            [estudianteRepresentante] = "estudianteRepresentante"
-            (newEstudianteRepresentanteEvent)="addEstudianteRepresentante($event)">
-        </app-estudiante-representante-new>
-    </mat-expansion-panel>
-</mat-accordion>
+<app-estudiante-representante-new
+    [estudianteRepresentante] = "estudianteRepresentante"
+    (newEstudianteRepresentanteEvent)="addEstudianteRepresentante($event)">
+</app-estudiante-representante-new>
+

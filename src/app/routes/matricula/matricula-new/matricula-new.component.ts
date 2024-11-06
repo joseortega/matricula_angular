@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, signal} from '@angular/core';
 import { PageHeaderComponent } from '@shared';
 import { Estudiante } from 'app/models/estudiante';
 import { EstudianteSearchComponent } from 'app/routes/estudiante/estudiante-search/estudiante-search.component';
 import { EstudianteShowComponent } from 'app/routes/estudiante/estudiante-show/estudiante-show.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EstudianteRepresentanteListComponent } from '../../estudiante-representante/estudiante-representante-list/estudiante-representante-list.component';
-import { ExpedienteComponent} from "../../expediente/expediente.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -17,6 +16,9 @@ import { ActivatedRoute, Router  } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { MatriculaShowComponent } from '../matricula-show/matricula-show.component';
+import { EstudianteRepresentantePrincipalComponent } from "../../estudiante-representante/estudiante-representante-principal/estudiante-representante-principal.component";
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'app-matricula-new',
@@ -26,19 +28,21 @@ import { MatriculaShowComponent } from '../matricula-show/matricula-show.compone
     EstudianteShowComponent,
     EstudianteSearchComponent,
     EstudianteRepresentanteListComponent,
-    ExpedienteComponent,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
     MatTooltipModule,
-    MatriculaFormComponent, MatriculaShowComponent,
+    MatriculaFormComponent,
+    MatriculaShowComponent,
+    EstudianteRepresentantePrincipalComponent,
+    MatExpansionModule, MatDivider,
   ],
   templateUrl: './matricula-new.component.html',
   styleUrl: './matricula-new.component.css'
 })
 export class MatriculaNewComponent implements OnInit {
 
-    public matricula: Matricula = new Matricula();
+    @Input() matricula: Matricula = new Matricula();
     public isEditMode: boolean = false;
 
     constructor(private matriculaService: MatriculaService,
@@ -49,15 +53,6 @@ export class MatriculaNewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const  matriculaId = Number(this.route.snapshot.paramMap.get('id'));
-        //comprobamos matriculaId existe
-        if(matriculaId){
-                 this.getById(matriculaId);
-        }
-    }
-
-    selectEstudiante(estudiante: Estudiante){
-        this.matricula.estudiante = estudiante;
     }
 
     editMatricula(editMode: boolean): void{
@@ -77,7 +72,7 @@ export class MatriculaNewComponent implements OnInit {
         this.matriculaService.create(this.matricula).subscribe({
             next: data => {
                 this.matricula = data;
-                this.router.navigate([`matricula/edit/${this.matricula.id}`]);
+                this.router.navigate([`matricula/dashboard/edit/${this.matricula.id}`]);
                 this.toastrService.success('El elemento fue creado correctamente!', 'Éxito!', {"closeButton": true});
                 this.isEditMode = false;
             }
@@ -91,30 +86,5 @@ export class MatriculaNewComponent implements OnInit {
                 this.isEditMode = false;
             }
         });
-    }
-
-    getById(matriculaId: number): void{
-        this.matriculaService.getById(matriculaId).subscribe({
-            next: data => {
-                this.matricula = data;
-            }
-        });
-    }
-
-    updateEstudiante(estudiante: Estudiante) {
-        this.matricula.estudiante = estudiante;
-    }
-
-    pdf(): void{
-      this.matriculaService.pdf(Number (this.matricula.id)).subscribe({
-        next: data => {
-          // Crear una URL para el Blob y forzar la descarga
-          const url = window.URL.createObjectURL(data);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'document.pdf';  // Nombre del archivo PDF
-          link.click();
-        }
-      });
     }
 }

@@ -1,1 +1,89 @@
-<p>matricula-dashboard works!</p>
+<page-header title="Matriculas" subtitle="Nueva Matricula" ></page-header>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab label="Informacion del Estudiante">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-content>
+            @if(!matricula.id){
+              <app-estudiante-search
+                [estudiante]="matricula.estudiante"
+                (selectEstudianteEvent)="selectEstudianteEvent($event)">
+              </app-estudiante-search>
+            }
+            @else{
+              <app-estudiante-search
+                [isInputSearchDisabled]="true"
+                [estudiante]="matricula.estudiante"
+                (selectEstudianteEvent)="selectEstudianteEvent($event)">
+              </app-estudiante-search>
+            }
+          </mat-card-content>
+        </mat-card>
+        @if(matricula.estudiante.id){
+          <app-estudiante-show
+            [estudiante]="matricula.estudiante"
+            (updateEstudianteEvent)="updateEstudianteEvent($event)">
+          </app-estudiante-show>
+        }
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [disabled]='!matricula.estudiante.id' label="Informacion del Representante">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title> Representante Principal </mat-panel-title>
+              <mat-panel-description> Datos del Representante principal </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-estudiante-representante-principal
+              [estudiante]="matricula.estudiante"
+              (newEstudianteRepresentanteEvent)="newEstudianteRepresentantePrincipalEvent($event)">
+            </app-estudiante-representante-principal>
+          </mat-expansion-panel>
+          <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+            <mat-expansion-panel-header>
+              <mat-panel-title> Otras Referencias </mat-panel-title>
+              <mat-panel-description>
+                Agregar otras referencias
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-estudiante-representante-list
+              [estudiante]="matricula.estudiante">
+            </app-estudiante-representante-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Datos de Matrícula">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <app-matricula-new
+          [matricula]="matricula">
+        </app-matricula-new>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Revisión de documentación">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <app-expediente-new
+          [estudiante]="matricula.estudiante">
+        </app-expediente-new>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [disabled]='!matricula.id' label="Impresion de Documentos">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <app-matricula-doc
+          [matricula]="matricula">
+        </app-matricula-doc>
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+

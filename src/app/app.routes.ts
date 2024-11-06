@@ -10,6 +10,7 @@ import { LoginComponent } from './routes/sessions/login/login.component';
 import { RegisterComponent } from './routes/sessions/register/register.component';
 import {MatriculaListComponent} from "./routes/matricula/matricula-list/matricula-list.component";
 import {MatriculaNewComponent} from "./routes/matricula/matricula-new/matricula-new.component";
+import {MatriculaDashboardComponent} from "./routes/matricula/matricula-dashboard/matricula-dashboard.component";
 
 export const routes: Routes = [
   {
@@ -21,6 +22,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'matricula', component: MatriculaListComponent },
+      { path: 'matricula/dashboard/new', component: MatriculaDashboardComponent },
+      { path: 'matricula/dashboard/edit/:id', component: MatriculaDashboardComponent },
       { path: 'matricula/new', component: MatriculaNewComponent },
       { path: 'matricula/edit/:id', component: MatriculaNewComponent },
       { path: '403', component: Error403Component },

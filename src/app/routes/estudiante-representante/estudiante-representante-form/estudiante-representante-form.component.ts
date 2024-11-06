@@ -19,6 +19,7 @@ import { Parentesco } from '../../../models/parentesco';
 import { notNullValidator } from '../../../validators/not-null-validator';
 import { MatSelectModule } from '@angular/material/select';
 import { ParentescoService } from '../../../services/parentesco.service';
+import {Estudiante} from "../../../models/estudiante";
 
 @Component({
   selector: 'app-estudiante-representante-form',
@@ -51,7 +52,6 @@ export class EstudianteRepresentanteFormComponent implements OnInit, OnChanges{
     estudianteRepresentanteForm = new FormGroup({
        representante: new FormControl<Representante>(new Representante(), [Validators.required, notNullValidator()]),
        parentesco: new FormControl<Parentesco>(new Parentesco(), [Validators.required, notNullValidator()]),
-       es_principal: new FormControl<boolean>(false),
     });
 
     constructor(private representanteService: RepresentanteService,

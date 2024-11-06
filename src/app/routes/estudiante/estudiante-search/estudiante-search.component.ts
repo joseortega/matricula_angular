@@ -30,27 +30,27 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './estudiante-search.component.css'
 })
 export class EstudianteSearchComponent implements OnInit, OnChanges{
-    
+
     @Input() estudiante: Estudiante = new Estudiante();
     @Output() selectEstudianteEvent = new EventEmitter<Estudiante>();
     //E caso que el input necesita que esté desactivado
-    @Input() isInputSearchDisabled: boolean = false; 
+    @Input() isInputSearchDisabled: boolean = false;
 
     estudianteControl = new FormControl<Estudiante>(new Estudiante());
-    
+
     filteredEstudiantes: Observable<Estudiante[]>=new Observable<Estudiante[]>;
-    
+
     constructor(private estudianteService: EstudianteService,
-                           public dialog: MatDialog){
+                public dialog: MatDialog){
     }
 
-    ngOnInit() {     
+    ngOnInit() {
         this.filteredEstudiantes = this.estudianteControl.valueChanges.pipe(
           startWith(''),
           switchMap(value => this.estudianteService.getSearch(value as string || '')),
         );
     }
-    
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes['estudiante']) {
             if (changes.estudiante.currentValue) {
@@ -62,21 +62,21 @@ export class EstudianteSearchComponent implements OnInit, OnChanges{
             }
         }
     }
-    
-    displayFn(estudiante: Estudiante): any {  
+
+    displayFn(estudiante: Estudiante): any {
         return estudiante && estudiante.id ? estudiante.identificacion+' '+estudiante.nombres+' '+estudiante.apellidos : '';
     }
-     
+
     onSelectEstudiante(estudiante: Estudiante){
           this.selectEstudianteEvent.emit(estudiante);
     }
-  
-  clearEstudiante(){
-      this.estudiante = new Estudiante();
-      this.estudianteControl.setValue(this.estudiante);
-      this.selectEstudianteEvent.emit(this.estudiante);     
-  }
-  
+
+    clearEstudiante(){
+        this.estudiante = new Estudiante();
+        this.estudianteControl.setValue(this.estudiante);
+        this.selectEstudianteEvent.emit(this.estudiante);
+    }
+
   newEstudiante(): void {
         const dialogRef = this.dialog.open(EstudianteNewComponent, {
           data: new Estudiante(),
@@ -85,9 +85,9 @@ export class EstudianteSearchComponent implements OnInit, OnChanges{
         dialogRef.afterClosed().subscribe(estudiante => {
            if(estudiante?.id){
                this.estudiante = estudiante;
-               this.selectEstudianteEvent.emit(this.estudiante);   
-           } 
+               this.selectEstudianteEvent.emit(this.estudiante);
+           }
         });
     }
-    
+
 }

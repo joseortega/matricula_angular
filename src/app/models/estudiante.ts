@@ -1,5 +1,6 @@
 import { Nacionalidad } from "./nacionalidad";
 import { UniformeTalla } from "./uniforme_talla";
+import {Expediente} from "./expediente";
 
 export class Estudiante {
     id: number | undefined;
@@ -14,6 +15,7 @@ export class Estudiante {
     tiene_discapacidad: boolean | undefined;
     uniforme_talla: UniformeTalla | undefined | null;
     nacionalidad: Nacionalidad;
+    expediente: Expediente | undefined;
     constructor(){
         this.nacionalidad = new Nacionalidad();
         this.uniforme_talla = new UniformeTalla();

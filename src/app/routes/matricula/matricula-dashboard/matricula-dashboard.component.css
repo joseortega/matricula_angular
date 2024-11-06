@@ -1,0 +1,41 @@
+/*Search Estudiante*/
+.search-container {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 20px;
+  box-sizing: border-box;
+}
+
+.search-input {
+  flex: 1;
+  margin-right: -4px; /* Ajusta este valor para asegurar que el botón y el input estén alineados */
+}
+
+.save-button {
+  margin-left: 6px; /* Ajusta este valor según sea necesario */
+}
+
+/*Show estudiante*/
+mat-grid-tile {
+  background: lightblue;
+}
+
+/*----------------------------------------------------*/
+
+/*Card con edit button*/
+.whit-icon-edit-card {
+  position: relative;
+}
+
+.edit-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10; /* Asegura que el botón esté por encima de otros elementos */
+}
+
+/*para espacio entre tabas y coentenido*/
+.tab-content {
+  margin-top: 16px; /* Opcional: Añadir padding interno al contenido de la pestaña */
+}

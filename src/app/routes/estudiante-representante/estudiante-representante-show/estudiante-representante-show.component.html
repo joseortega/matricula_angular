@@ -1,16 +1,23 @@
 <mat-card>
-    <button mat-icon-button aria-label="Nuevo" class="edit-button" (click)="delete()">
+    @if (isDelete===true){
+      <button mat-icon-button aria-label="Nuevo" class="edit-button" (click)="delete()">
         <mat-icon>close</mat-icon>
-    </button>
+      </button>
+    }
     <mat-card-header>
-        <h3 class="mat-h3">
+        <h4 class="mat-h4">
             {{estudianteRepresentante.representante.apellidos}} {{estudianteRepresentante.representante.nombres}}
-
-                @if(estudianteRepresentante.es_principal === true){
-                    <span>(Principal)</span>
-                }
-
-        </h3>
+            @if(estudianteRepresentante.es_principal === true){
+              <div class="chip-container">
+              <mat-chip-set aria-label="Dog selection">
+                <mat-chip>
+                  <mat-icon matChipAvatar>check_circle</mat-icon>
+                  Principal
+                </mat-chip>
+              </mat-chip-set>
+              </div>
+            }
+        </h4>
     </mat-card-header>
     <mat-card-content>
             @if(!isEditing){
@@ -26,7 +33,7 @@
                 </mat-card>
             }@else{
                 <app-estudiante-representante-new
-                    [isInputRepresentanteDisabled]="true"
+                    [isInputRepresentanteDisabled]="false"
                     [estudianteRepresentante] = "estudianteRepresentante"
                     (newEstudianteRepresentanteEvent)="updateEstudianteRepresentante($event)">
                 </app-estudiante-representante-new>

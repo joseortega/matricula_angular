@@ -38,7 +38,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handleError(error: HttpErrorResponse) {
     if (this.errorPages.includes(error.status)) {
-      this.toast.error(this.getMessage(error));
+      /*this.toast.error(this.getMessage(error));*//*condigo mio*/
       /*this.router.navigateByUrl(`/${error.status}`, {
         skipLocationChange: true,
       });*/

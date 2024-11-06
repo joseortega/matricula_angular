@@ -73,10 +73,10 @@ export class EstudianteFormComponent implements OnInit, OnChanges{
        uniforme_talla: new FormControl<UniformeTalla | null>(null),
     });
 
-    constructor( private nacionalidadService: NacionalidadService,
-                            private uniformeTallaService: UniformeTallaService,
-                            private datePipe: DatePipe,
-                            ){
+    constructor(private nacionalidadService: NacionalidadService,
+                private uniformeTallaService: UniformeTallaService,
+                private datePipe: DatePipe,
+                ){
     }
     ngOnInit(): void {
         this.nacionalidades$ = this.nacionalidadService.getList();
@@ -90,15 +90,15 @@ export class EstudianteFormComponent implements OnInit, OnChanges{
         this.submittedEvent.emit( this.estudiante);
     }
 
-     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['estudiante']) {
-            if (changes.estudiante.currentValue) {
-                this.estudianteForm.patchValue(this.estudiante);
-            }
-        }
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['estudiante']) {
+          if (changes.estudiante.currentValue) {
+              this.estudianteForm.patchValue(this.estudiante);
+          }
+      }
     }
 
     compareObjects(option1: any, option2: any): boolean {
-        return option1 && option2 && option1.id === option2.id;
-  }
+      return option1 && option2 && option1.id === option2.id;
+    }
 }

@@ -52,13 +52,33 @@ export class MatriculaService {
         return this.http.get<Matricula>(`${this.urlBase}/api/matricula/${id}`);
     }
 
-    pdf(id: number): Observable<Blob>{
+    pdfCertificadoMatricula(id: number): Observable<Blob>{
 
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
       });
 
-      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf/${id}`, { headers, responseType: 'blob' as 'json' });
+      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf-certificado-matricula/${id}`, { headers, responseType: 'blob' as 'json' });
+    }
+
+    pdfCartaAutorizacion(id: number): Observable<Blob>{
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
+      });
+
+      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf-carta-autorizacion/${id}`, { headers, responseType: 'blob' as 'json' });
+    }
+
+    pdfActaCompromiso(id: number): Observable<Blob>{
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
+      });
+
+      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf-acta-compromiso/${id}`, { headers, responseType: 'blob' as 'json' });
     }
 }

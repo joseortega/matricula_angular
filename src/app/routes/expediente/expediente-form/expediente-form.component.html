@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-content>
+    <form class="form-field-full" [formGroup]="expedienteForm" (ngSubmit)="submit()">
+      <mat-selection-list formControlName="requisitos" [compareWith]="compareObjects">
+        @for (requisito of requisitos$ | async; track requisito ) {
+          <mat-list-option [value]="requisito">{{requisito.descripcion}}</mat-list-option>
+        }
+      </mat-selection-list>
+      <mat-form-field>
+        <mat-label>Observación</mat-label>
+        <textarea matInput placeholder="Escriba cualquier observación, Ej. Falta doc" formControlName="observacion"></textarea>
+      </mat-form-field>
+      <div class="d-flex justify-content-end">
+        <button mat-raised-button color="primary" [disabled]="!expedienteForm.valid">Guardar</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+

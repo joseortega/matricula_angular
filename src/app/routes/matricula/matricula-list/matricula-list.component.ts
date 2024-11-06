@@ -54,7 +54,7 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public pageSizeOptions: number[] = [5, 10, 25, 50];
     public filtertext: string = '';
     public matriculas: Matricula[] = [];
-    
+
     //filters
     matriculaFilter: MatriculaFilter = {grado_escolar: new GradoEscolar(),periodo_lectivo: new PeriodoLectivo(), search_term: ''};
     matriculaFilterForm = new FormGroup({
@@ -62,36 +62,36 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
         grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar()),
         search_term: new FormControl('')
     });
-    
-        
+
+
     public periodoLectivoList$: Observable<PeriodoLectivo[]>=new Observable<PeriodoLectivo[]>;
     public gradoEscolarList$: Observable<GradoEscolar[]>=new Observable<GradoEscolar[]>;
-    
+
     public dataSource = new MatTableDataSource<Matricula>();
     @ViewChild(MatPaginator) private paginator!: MatPaginator;
-    
+
     displayedColumns: string[] = ['periodo_lectivo', 'identificacion', 'nombres', 'apellidos', "grado_escolar"];
-    
+
     constructor(private matriculaService: MatriculaService,
                            private periodoLectivoService: PeriodoLectivoService,
-                           private gradoEscolarService: GradoEscolarService, 
+                           private gradoEscolarService: GradoEscolarService,
                            private route: ActivatedRoute,
                            private router: Router){
     }
-    
+
     ngOnInit(): void {
         //filters
         this.gradoEscolarList$ = this.gradoEscolarService.getList();
         this.periodoLectivoList$ = this.periodoLectivoService.getList();
-        
+
         //matricula list
         this.getMatriculaList();
     }
-    
+
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
   }
-    
+
     handlePageEvent(pageEvent: PageEvent) {
         this.pageSize = pageEvent.pageSize;
         this.pageIndex = pageEvent.pageIndex;
@@ -101,9 +101,9 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
 
     selectMatricula(matricula: Matricula){
         const matriculaId = matricula ? matricula.id : null;
-        this.router.navigate(['/matricula/edit', matriculaId]);
+        this.router.navigate(['/matricula/dashboard/edit', matriculaId]);
     }
-    
+
     getMatriculaList(): void {
         this.matriculaService.getList(this.pageIndex +1, this.pageSize, this.matriculaFilter).subscribe({
             next: data => {
@@ -113,11 +113,11 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
             }
         });
     }
-    
+
     search():void{
         this.getMatriculaList();
     }
-    
+
     submit(){
         // Obtener los valores del formulario
         const formValues = this.matriculaFilterForm.value;
@@ -128,11 +128,11 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
             grado_escolar: formValues.grado_escolar,
             search_term: formValues.search_term
         };
-        
+
         //actualizamos la lista de matricula con los filters
         this.getMatriculaList();
     }
-    
+
     compareObjects(option1: any, option2: any): boolean {
         return option1 && option2 && option1.id === option2.id;
     }

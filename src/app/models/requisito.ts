@@ -1,4 +1,4 @@
 export class Requisito{
   id: number | undefined;
-  description: string | undefined;
+  descripcion: string | undefined;
 }

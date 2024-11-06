@@ -60,9 +60,9 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
     public jornadas$: Observable<Jornada[]> = new Observable<Jornada[]>;
     public paralelos$: Observable<Paralelo[]> = new Observable<Paralelo[]>;
     public estados: string[] = [MATRICULA_ESTADO.preinscripción,
-                               MATRICULA_ESTADO.pendiente,
-                               MATRICULA_ESTADO.completada
-                              ];
+                                MATRICULA_ESTADO.pendiente,
+                                MATRICULA_ESTADO.completada
+                                ];
 
     @Input() matricula: Matricula= new Matricula();
     @Output() submittedEvent = new EventEmitter<Matricula>();
@@ -74,8 +74,8 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
        grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar(), [Validators.required, notNullValidator()]),
        jornada: new FormControl<Jornada>(new Jornada(), [Validators.required, notNullValidator()]),
        paralelo: new FormControl<Paralelo>(new Paralelo(), [Validators.required, notNullValidator()]),
-       estado: new FormControl<any>('', Validators.required),
-       observacion: new FormControl<string | undefined>(''),
+       estado: new FormControl<string | undefined>("", Validators.required),
+       observacion: new FormControl<string>(''),
     });
 
     constructor(private modalidadService: ModalidadService,
@@ -106,8 +106,8 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
                     grado_escolar: this.matricula.grado_escolar,
                     jornada: this.matricula.jornada,
                     paralelo: this.matricula.paralelo,
-                    estado: this.matricula.estado,
-                    observacion: this.matricula.observacion
+                    estado: this.matricula.estado || '',
+                    observacion: this.matricula.observacion || ''
                     });
             }
         }

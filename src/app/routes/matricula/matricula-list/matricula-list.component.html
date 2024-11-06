@@ -1,12 +1,12 @@
 <page-header title="Matriculas" subtitle="Listados de Matriculas" class="bg-green-600" ></page-header>
 <mat-card>
     <mat-card-actions align="end">
-        <a mat-flat-button routerLink="/matricula/new" class="m-2" >Nueva Matricula</a>
+        <a mat-flat-button routerLink="/matricula/dashboard/new" class="m-2" >Nueva Matricula</a>
         <button mat-stroked-button color="primary">Imprimir Lista</button>
     </mat-card-actions>
-    
+
      <mat-divider></mat-divider>
-     
+
     <mat-card-content>
         <form class="form-field-full" [formGroup]="matriculaFilterForm" (ngSubmit)="submit()">
             <p>Filter</p>
@@ -20,8 +20,8 @@
                               <mat-option [value]="periodoLectivo">{{periodoLectivo.descripcion}}</mat-option>
                             }
                         </mat-select>
-                    </mat-form-field>      
-                </div>   
+                    </mat-form-field>
+                </div>
                 <div class="col-sm-6">
                     <mat-form-field>
                         <mat-label>Grado o Curso</mat-label>

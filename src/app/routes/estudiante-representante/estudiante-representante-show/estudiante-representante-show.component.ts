@@ -9,6 +9,7 @@ import { EstudianteRepresentanteNewComponent } from '../estudiante-representante
 import { Representante } from '../../../models/representante';
 import { EstudianteRepresentanteService } from '../../../services/estudiante-representante.service';
 import { ToastrService } from 'ngx-toastr';
+import {MatChipsModule} from '@angular/material/chips';
 
 @Component({
   selector: 'app-estudiante-representante-show',
@@ -20,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
             MatIconModule,
             MatCardModule,
             MatDividerModule,
+            MatChipsModule,
             ],
   templateUrl: './estudiante-representante-show.component.html',
   styleUrl: './estudiante-representante-show.component.css'
@@ -29,6 +31,7 @@ export class EstudianteRepresentanteShowComponent {
    @Input() estudianteRepresentante: EstudianteRepresentante = new EstudianteRepresentante();
    @Output() estudianteRepresentanteDeleteEvent = new EventEmitter<EstudianteRepresentante>();
 
+   @Input() isDelete: boolean = true;
    public isEditing: boolean = false;
 
    constructor(private toastrService: ToastrService,

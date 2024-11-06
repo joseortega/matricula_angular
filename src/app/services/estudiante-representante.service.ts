@@ -5,6 +5,7 @@ import {Observable, catchError} from 'rxjs';
 
 import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
 import { EstudianteRepresentante } from 'app/models/EstudianteRepresentante';
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,13 @@ private urlBase: string;
    }
 
    getList(estudianteId: number): Observable<EstudianteRepresentante[]>{
-        return this.http.get<EstudianteRepresentante[]>(`${this.urlBase}/api/estudiante/${estudianteId}/representante`).pipe(
+      return this.http.get<EstudianteRepresentante[]>(`${this.urlBase}/api/estudiante/${estudianteId}/representante`).pipe(
         catchError(this.handleError<any>('getList', []))
       );
-    }
+   }
 
-    getListAlternativos(estudianteId: number): Observable<EstudianteRepresentante[]>{
-        return this.http.get<EstudianteRepresentante[]>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/alternativos`).pipe(
+    getAlternativos(estudianteId: number): Observable<EstudianteRepresentante[]>{
+       return this.http.get<EstudianteRepresentante[]>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/alternativos`).pipe(
         catchError(this.handleError<any>('getList', []))
       );
     }
@@ -38,10 +39,8 @@ private urlBase: string;
       );
     }
 
-    getByPrincipal(estudianteId: number): Observable<EstudianteRepresentante>{
-      return this.http.get<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/principal`).pipe(
-        catchError(this.handleError<any>('getById', []))
-      );
+    getPrincipal(estudianteId: number): Observable<EstudianteRepresentante>{
+      return this.http.get<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/principal`);
     }
 
     create(estudianteId: number, estudianteRepresentante: EstudianteRepresentante): Observable<EstudianteRepresentante>{
@@ -62,5 +61,9 @@ private urlBase: string;
         return this.http.delete<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/delete/${id}`).pipe(
         catchError(this.handleError<any>('delete', []))
         );
+    }
+
+    existePrincipal(estudianteId: number):Observable<boolean>{
+      return this.http.get<boolean>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/existe-principal`);
     }
 }

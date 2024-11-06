@@ -81,7 +81,7 @@ export class EstudianteRepresentanteListComponent implements OnInit{
      * La lista obtenida se asigna a la propiedad estudianteRepresentantes del componente.
      */
     getEstudianteRepresentantes(): void {
-      this.estudianteRepresentanteService.getList(Number(this.estudiante.id)).subscribe({
+      this.estudianteRepresentanteService.getAlternativos(Number(this.estudiante.id)).subscribe({
         next: data => {
           this.estudianteRepresentantes = data;
         }

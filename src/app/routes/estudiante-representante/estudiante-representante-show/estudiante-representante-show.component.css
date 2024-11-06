@@ -1,4 +1,4 @@
-/*Card con edit button*/ 
+/*Card con edit button*/
 .whit-icon-edit-card {
   position: relative;
 }
@@ -8,4 +8,15 @@
   top: 8px;
   right: 8px;
   z-index: 10; /* Asegura que el botón esté por encima de otros elementos */
+}
+
+/*css para chip*/
+h4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chip-container {
+  margin-left: 16px; /* Empuja el contenido hacia la derecha */
 }

@@ -2,9 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EstudianteRepresentanteFormComponent } from '../estudiante-representante-form/estudiante-representante-form.component';
 import { EstudianteRepresentante } from '../../../models/EstudianteRepresentante';
 import { EstudianteRepresentanteService } from '../../../services/estudiante-representante.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Estudiante } from '../../../models/estudiante';
 import { ToastrService } from 'ngx-toastr';
 import { Representante } from '../../../models/representante';
 
@@ -20,6 +17,7 @@ export class EstudianteRepresentanteNewComponent implements OnInit{
     @Input() estudianteRepresentante: EstudianteRepresentante = new EstudianteRepresentante();
     @Output() newEstudianteRepresentanteEvent = new EventEmitter<EstudianteRepresentante>();
     @Input() isInputRepresentanteDisabled: boolean = false;
+    @Input() isEsPrincipal: boolean = false;
 
 
     constructor(private estudianteRepresentanteService: EstudianteRepresentanteService,
@@ -32,6 +30,7 @@ export class EstudianteRepresentanteNewComponent implements OnInit{
     onSubmitted(estudianteRepresentante: EstudianteRepresentante){
         this.estudianteRepresentante = estudianteRepresentante;
         if(!this.estudianteRepresentante.id){
+            this.estudianteRepresentante.es_principal = this.isEsPrincipal;
             this.create();
         }else{
             this.update();

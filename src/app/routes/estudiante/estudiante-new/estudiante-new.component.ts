@@ -33,9 +33,9 @@ import { ToastrService } from 'ngx-toastr';
 export class EstudianteNewComponent {
 
     constructor(public dialogRef: MatDialogRef<EstudianteNewComponent>,
-                           @Inject(MAT_DIALOG_DATA) public estudiante: Estudiante,
-                           private estudianteService: EstudianteService,
-                           private toastrService: ToastrService){
+                @Inject(MAT_DIALOG_DATA) public estudiante: Estudiante,
+                private estudianteService: EstudianteService,
+                private toastrService: ToastrService){
     }
 
     onClose(): void {

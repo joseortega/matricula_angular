@@ -28,10 +28,7 @@ export class EstudianteService {
     }
 
     create(estudiante: Estudiante): Observable<Estudiante>{
-        return this.http.post<Estudiante>(`${this.urlBase}/api/estudiante/create`, estudiante)
-        .pipe(
-                catchError(this.handleError<any>('getList', []))
-      );
+        return this.http.post<Estudiante>(`${this.urlBase}/api/estudiante/create`, estudiante);
     }
 
     update(id:number, estudiante: Estudiante): Observable<Estudiante>{

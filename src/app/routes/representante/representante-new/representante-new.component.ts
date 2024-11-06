@@ -21,29 +21,29 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-representante-new',
   standalone: true,
   imports: [
-                    MatDialogTitle,
-                    MatDialogContent,
-                    MatDialogActions,
-                    MatDialogClose,
-                    MatButtonModule,
-                    MatIconModule,
-                    RepresentanteFormComponent,                    
-                    ],
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+    MatIconModule,
+    RepresentanteFormComponent,
+  ],
   templateUrl: './representante-new.component.html',
   styleUrl: './representante-new.component.css'
 })
 export class RepresentanteNewComponent {
-    
+
     constructor(public dialogRef: MatDialogRef<RepresentanteNewComponent>,
-                           @Inject(MAT_DIALOG_DATA) public representante: Representante,
-                           private representanteService: RepresentanteService,
-                           private toastrService: ToastrService){
+                @Inject(MAT_DIALOG_DATA) public representante: Representante,
+                private representanteService: RepresentanteService,
+                private toastrService: ToastrService){
     }
-    
+
     onClose(): void {
         this.dialogRef.close();
     }
-    
+
     onSubmitted(representante: Representante){
         this.representante = representante;
         if(!this.representante.id){
@@ -52,23 +52,23 @@ export class RepresentanteNewComponent {
             this.update();
         }
     }
-    
+
     create(): void{
         this.representanteService.create(this.representante).subscribe({
             next: data => {
-                this.representante = data; 
+                this.representante = data;
                  this.toastrService.success('El elemento fue creado correctamente!', 'Éxito!', {"closeButton": true});
-                this.dialogRef.close(this.representante);  
+                this.dialogRef.close(this.representante);
             }
         });
     }
-    
+
      update(): void{
         this.representanteService.update(Number(this.representante.id), this.representante).subscribe({
             next: data => {
                 this.representante = data;
                  this.toastrService.success('El elemento fue actualizado correctamente!', 'Éxito!', {"closeButton": true});
-                 this.dialogRef.close(this.representante);  
+                 this.dialogRef.close(this.representante);
             }
         });
     }

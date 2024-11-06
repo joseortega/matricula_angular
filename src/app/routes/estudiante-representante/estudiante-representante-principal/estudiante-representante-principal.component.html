@@ -1,0 +1,13 @@
+@if (estudianteRepresentante.id){
+  <app-estudiante-representante-show
+    [estudianteRepresentante]="estudianteRepresentante"
+    [isDelete]="false">
+  </app-estudiante-representante-show>
+} @else {
+  <app-estudiante-representante-new
+    [estudianteRepresentante] = "estudianteRepresentante"
+    [isEsPrincipal] = "true"
+    (newEstudianteRepresentanteEvent)="newEstudianteRepresentante($event)">
+  </app-estudiante-representante-new>
+}
+

@@ -21,7 +21,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(mergeMap((event: HttpEvent<any>) => this.handleOkReq(event)));
   }
 
-  private handleOkReq(event: HttpEvent<any>) {
+  /*private handleOkReq(event: HttpEvent<any>) {
     if (event instanceof HttpResponse) {
       const body: any = event.body;
       // failure: { code: **, msg: 'failure' }
@@ -34,6 +34,23 @@ export class DefaultInterceptor implements HttpInterceptor {
       }
     }
     // Pass down event if everything is OK
+    return of(event);
+  }*/
+
+  private handleOkReq(event: HttpEvent<any>) {
+    if (event instanceof HttpResponse) {
+      const body: any = event.body;
+
+      // Verifica si el body es un objeto antes de buscar la propiedad 'code'.
+      if (body && typeof body === 'object' && 'code' in body && body.code !== 0) {
+        if (body.msg) {
+          this.toast.error(body.msg);
+        }
+        return throwError(() => []);
+      }
+    }
+
+    // Si el body no es un objeto o no tiene 'code', simplemente pasa el evento.
     return of(event);
   }
 }
