@@ -39,8 +39,8 @@ export class LoginComponent {
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['ng-matero', [Validators.required]],
-    password: ['ng-matero', [Validators.required]],
+    username: ['admin', [Validators.required]],
+    password: ['pass_1234', [Validators.required]],
     rememberMe: [false],
   });
 
@@ -58,10 +58,11 @@ export class LoginComponent {
 
   login() {
     this.isSubmitting = true;
-
     this.auth
       .login(this.username.value, this.password.value, this.rememberMe.value)
-      .pipe(filter(authenticated => authenticated))
+      .pipe(filter(authenticated => {
+        return authenticated;
+      }))
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/');
@@ -76,7 +77,9 @@ export class LoginComponent {
               });
             });
           }
+          console.error('Error durante el login:', errorRes);
           this.isSubmitting = false;
+
         },
       });
   }

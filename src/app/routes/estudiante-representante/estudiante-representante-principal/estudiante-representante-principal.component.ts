@@ -42,16 +42,9 @@ export class EstudianteRepresentantePrincipalComponent {
         this.estudianteRepresentante = data;
       },
       error: (error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          // Si no hay representante principal, no mostrar error, sólo asignar un mensaje o dejar el objeto vacío
-          this.toastrService.info('Agregue el representante principal para este estudiante');
-          //en caso que no haya un representante principal, agregamos al nuevo estudianterepresentante el estudiante actual
+        if (!(error.error instanceof ErrorEvent)) {
           this.estudianteRepresentante.estudiante = this.estudiante;
-        } else {
-          // Otros errores
-          console.log('Error occurred:', error.message);
-          this.toastrService.error('Ocurrió un error al obtener el representante principal.');
-        }
+          }
       }
     });
   }

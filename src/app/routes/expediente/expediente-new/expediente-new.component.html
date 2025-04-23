@@ -1,4 +1,12 @@
-<app-expediente-form
-  [expediente]="expediente"
-  (submittedEvent)="onSubmitted($event)">
-</app-expediente-form>
+@if(expediente.id && !isEditMode){
+  <app-expediente-show
+    [expediente]="expediente"
+    (editExpedienteEvent) = "editExpedienteEvent($event)"
+    (changeWithdrawStatusEvent)="changeWithdrawStatusEvent($event)">
+  </app-expediente-show>
+} @else {
+  <app-expediente-form
+    [expediente]="expediente"
+    (submittedEvent)="onSubmitted($event)">
+  </app-expediente-form>
+}

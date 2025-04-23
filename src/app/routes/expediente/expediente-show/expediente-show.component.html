@@ -1,0 +1,66 @@
+<mat-card class="whit-icon-edit-card" [class.disabled]="expediente.esta_retirado">
+  <button mat-icon-button aria-label="Editar" class="edit-button" (click)="editExpediente()">
+    <mat-icon>edit</mat-icon>
+  </button>
+
+  <mat-card-content>
+    <h3>Datos del Expediente</h3>
+    <div class="row">
+      <div class="col-sm-6">
+        <mat-list role="list">
+          <mat-list-item>
+            <span matListItemTitle>{{expediente.fecha_ingreso}}</span>
+            <span matListItemLine>Fecha de Ingreso</span>
+          </mat-list-item>
+          <mat-list-item>
+            @if(expediente.esta_completo){
+              <span matListItemTitle>Expediente completo</span>
+            }@else{
+              <span matListItemTitle>Falta documentación</span>
+            }
+            <span matListItemLine>Está Completo?</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="col-sm-6">
+        <mat-list role="list">
+          <mat-list-item>
+            @if(!expediente.esta_retirado){
+              <div matListItemTitle>No se ha retirado</div>
+            }@else{
+              <div matListItemTitle>Si, se ha retirado</div>
+            }
+            <div matListItemLine>Está retirado?</div>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{expediente.fecha_retiro}}</span>
+            <span matListItemLine>Fecha de retiro:</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+
+    <h3>Documentación del Estudiante</h3>
+
+      <mat-list role="list">
+        @for (requisito of expediente.requisitos; track requisito){
+          <mat-list-item>
+            <mat-icon matListItemIcon>description</mat-icon>
+            <div matListItemLine>{{requisito.descripcion}}</div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        }
+      </mat-list>
+
+  </mat-card-content>
+</mat-card>
+@if(!expediente.esta_retirado){
+  <div class="d-flex justify-content-end">
+    <button mat-raised-button (click)="withdrawExpediente()">Retirar Expediente</button>
+  </div>
+} @else{
+  <div class="d-flex justify-content-end">
+    <button mat-raised-button (click)="withdrawPrint()">Imprimir Acta de Retiro</button>
+    <button mat-raised-button (click)="reentryExpediente()">Reeingresar Expediente</button>
+  </div>
+}

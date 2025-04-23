@@ -21,29 +21,30 @@ import { Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatriculaFilter } from 'app/filters/matricula-filter';
+import {MatChip, MatChipAvatar, MatChipSet} from "@angular/material/chips";
 
 @Component({
   selector: 'app-matricula-list',
   standalone: true,
   imports: [CommonModule,
-                    FormsModule,
-                     RouterOutlet,
-                     RouterModule,
-                     PageHeaderComponent,
-                     MatTableModule,
-                     MatFormFieldModule,
-                     MatSelectModule,
-                     MatInputModule,
-                     MatCardModule,
-                     MatButtonModule,
-                     MatDividerModule,
-                     MatPaginatorModule,
-                     AsyncPipe,
-                     CommonModule,
-                     FormsModule,
-                     ReactiveFormsModule,
-                     MatIconModule
-                     ],
+    FormsModule,
+    RouterOutlet,
+    RouterModule,
+    PageHeaderComponent,
+    MatTableModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatPaginatorModule,
+    AsyncPipe,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule, MatChip, MatChipAvatar, MatChipSet
+  ],
   templateUrl: './matricula-list.component.html',
   styleUrl: './matricula-list.component.css'
 })
@@ -52,7 +53,6 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public collectionLength: number = 0;
     public pageSize: number = 10;
     public pageSizeOptions: number[] = [5, 10, 25, 50];
-    public filtertext: string = '';
     public matriculas: Matricula[] = [];
 
     //filters
@@ -70,28 +70,35 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public dataSource = new MatTableDataSource<Matricula>();
     @ViewChild(MatPaginator) private paginator!: MatPaginator;
 
-    displayedColumns: string[] = ['periodo_lectivo', 'identificacion', 'nombres', 'apellidos', "grado_escolar"];
+    displayedColumns: string[] = ['periodo_lectivo', 'identificacion', 'nombres', 'apellidos', "grado_escolar", "esta_activa"];
 
     constructor(private matriculaService: MatriculaService,
-                           private periodoLectivoService: PeriodoLectivoService,
-                           private gradoEscolarService: GradoEscolarService,
-                           private route: ActivatedRoute,
-                           private router: Router){
+                 private periodoLectivoService: PeriodoLectivoService,
+                 private gradoEscolarService: GradoEscolarService,
+                 private route: ActivatedRoute,
+                 private router: Router){
     }
 
+    /**
+     * Inicializa el componente cargando las listas necesarias para los filtros
+     * y obteniendo la lista inicial de matrículas
+     */
     ngOnInit(): void {
         //filters
         this.gradoEscolarList$ = this.gradoEscolarService.getList();
         this.periodoLectivoList$ = this.periodoLectivoService.getList();
-
         //matricula list
         this.getMatriculaList();
     }
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
-  }
+    }
 
+    /**
+     * Maneja los eventos de paginación, actualizando el tamaño de página
+     * y el índice actual para obtener los nuevos registros
+     */
     handlePageEvent(pageEvent: PageEvent) {
         this.pageSize = pageEvent.pageSize;
         this.pageIndex = pageEvent.pageIndex;
@@ -99,17 +106,24 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
         this.getMatriculaList();
   }
 
+    /**
+     * Navega a la vista de edición de la matrícula seleccionada
+     * @param matricula Objeto matrícula seleccionado
+     */
     selectMatricula(matricula: Matricula){
         const matriculaId = matricula ? matricula.id : null;
         this.router.navigate(['/matricula/dashboard/edit', matriculaId]);
     }
 
+    /**
+     * Obtiene la lista de matrículas aplicando los filtros y paginación actuales
+     */
     getMatriculaList(): void {
         this.matriculaService.getList(this.pageIndex +1, this.pageSize, this.matriculaFilter).subscribe({
             next: data => {
                this.matriculas = data.items;
                this.dataSource = new MatTableDataSource<Matricula>(this.matriculas);
-                this.collectionLength = data.count;
+               this.collectionLength = data.total_count;
             }
         });
     }
@@ -118,6 +132,9 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
         this.getMatriculaList();
     }
 
+    /**
+     * Procesa el formulario de filtros, reinicia la paginación y actualiza la lista
+     */
     submit(){
         // Obtener los valores del formulario
         const formValues = this.matriculaFilterForm.value;
@@ -128,11 +145,19 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
             grado_escolar: formValues.grado_escolar,
             search_term: formValues.search_term
         };
+        //reseteamos la pagina a 0
+        this.pageIndex = 0;
 
         //actualizamos la lista de matricula con los filters
         this.getMatriculaList();
     }
 
+    /**
+     * Compara dos objetos por su ID para el select de Material
+     * @param option1 Primer objeto a comparar
+     * @param option2 Segundo objeto a comparar
+     * @returns boolean indicando si los objetos son iguales
+     */
     compareObjects(option1: any, option2: any): boolean {
         return option1 && option2 && option1.id === option2.id;
     }

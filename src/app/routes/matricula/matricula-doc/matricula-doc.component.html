@@ -1,15 +1,6 @@
 <h1>
   Reportes
 </h1>
-
-<mat-card appearance="outlined">
-  <mat-card-content>
-    <button mat-fab extended (click)="printCertificadoMatricula()">
-      <mat-icon>picture_as_pdf</mat-icon>
-      Certificado de Matricula
-    </button>
-  </mat-card-content>
-</mat-card>
 <mat-card appearance="outlined">
   <mat-card-header>
     <mat-card-title> Documentos de autorización del representante</mat-card-title>
@@ -22,6 +13,22 @@
     <button mat-fab extended class="m-12" (click)="printActaCompromiso()">
       <mat-icon>picture_as_pdf</mat-icon>
       Acta de Compromiso
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title> Documentos de Matricula</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <button mat-fab extended (click)="printCertificadoMatricula()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      Certificado de Matricula
+    </button>
+    <button class="m-12" mat-fab extended (click)="printCertificadoMatriculaAsistencia()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      Certificado de Matricula y Asistencia
     </button>
   </mat-card-content>
 </mat-card>

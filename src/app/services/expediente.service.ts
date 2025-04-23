@@ -1,39 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {Observable, catchError} from 'rxjs';
-
-import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
-import {Expediente} from "../models/expediente";
-import {Representante} from "../models/representante";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Expediente } from "../models/expediente";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpedienteService {
 
-  private urlBase: string;
-  private handleError: HandleError;
-
-  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
-    this.urlBase= 'https://localhost:8000';
-    this.handleError = httpErrorHandler.createHandleError('ExpedienteService')
+  constructor(private http: HttpClient) {
   }
 
   getByEstudianteId(estudianteId: number): Observable<Expediente>{
-    return this.http.get<Expediente>(`${this.urlBase}/api/estudiante/${estudianteId}/expediente`);
+    return this.http.get<Expediente>(`/estudiante/${estudianteId}/expediente`);
   }
 
   create(estudianteId:number, expediente: Expediente): Observable<Expediente>{
-    return this.http.post<Expediente>(`${this.urlBase}/api/estudiante/${estudianteId}/expediente/create`, expediente)
-      .pipe(
-        catchError(this.handleError<any>('create', []))
-      );
+    return this.http.post<Expediente>(`/estudiante/${estudianteId}/expediente/create`, expediente);
   }
 
   update(estudianteId: number, expediente: Expediente): Observable<Expediente>{
-    return this.http.put<Expediente>(`${this.urlBase}/api/estudiante/${estudianteId}/expediente/update`, expediente)
-      .pipe(
-        catchError(this.handleError<any>('update', []))
-      );
+    return this.http.put<Expediente>(`/estudiante/${estudianteId}/expediente/update`, expediente);
+  }
+
+  exists(estudianteId: number): Observable<boolean>{
+    return this.http.get<boolean>(`/estudiante/${estudianteId}/expediente/verifica`);
+  }
+
+  withdraw(expedienteId: number): Observable<Expediente>{
+    return this.http.get<Expediente>(`/expediente/withdraw/${expedienteId}`);
+  }
+
+  reentry(expedienteId: number): Observable<Expediente>{
+    return this.http.get<Expediente>(`/expediente/reentry/${expedienteId}`);
+  }
+
+  withdrawPrint(expedienteId: number): Observable<Blob>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
+    });
+
+    return this.http.get<Blob>(`/expediente/withdraw-print/${expedienteId}`, { headers, responseType: 'blob' as 'json' });
   }
 }

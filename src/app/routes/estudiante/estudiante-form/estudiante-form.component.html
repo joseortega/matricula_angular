@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <form class="form-field-full" [formGroup]="estudianteForm" (ngSubmit)="submit()">
-            
+
             <div class="row">
                 <!--columna 1-->
                  <!--<div class="col-sm-6">-->
@@ -26,7 +26,7 @@
                           }
                         </mat-select>
                     </mat-form-field>
-                    
+
                     <mat-form-field>
                         <mat-label>Fecha de Nacimiento</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
@@ -36,7 +36,7 @@
                     </mat-form-field>
 
                 <!--</div>-->
-                
+
                 <!--columna 2-->
                 <!--<div class="col-sm-6">-->
                     <mat-form-field>
@@ -52,27 +52,27 @@
                             </mat-error>
                         }
                     </mat-form-field>
-                    
+
                     <mat-form-field>
-                        <mat-label>Lugar de Residencia</mat-label>
-                        <input matInput formControlName="lugar_residencia">
+                      <mat-label>Seleccione la Talla del Uniforme</mat-label>
+                      <mat-select formControlName="uniforme_talla" [compareWith]="compareObjects">
+                        @for (uniformeTalla of uniformeTallas$ | async; track uniformeTalla) {
+                          <mat-option [value]="uniformeTalla">{{uniformeTalla.descripcion}}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Teléfono</mat-label>
+                      <input matInput formControlName="telefono">
+                      <mat-icon matSuffix>phone</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Direccion</mat-label>
+                        <textarea matInput placeholder="Escriba la direccion o residencia" formControlName="direccion"></textarea>
                      </mat-form-field>
-                    
-                    <mat-form-field>
-                        <mat-label>Seleccione la Talla del Uniforme</mat-label>
-                        <mat-select formControlName="uniforme_talla" [compareWith]="compareObjects">
-                          @for (uniformeTalla of uniformeTallas$ | async; track uniformeTalla) {
-                            <mat-option [value]="uniformeTalla">{{uniformeTalla.descripcion}}</mat-option>
-                          }
-                        </mat-select>
-                    </mat-form-field>
-                    
-                    <mat-form-field>
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput formControlName="telefono">
-                        <mat-icon matSuffix>phone</mat-icon>
-                    </mat-form-field>
-                    
+
                     <mat-form-field>
                         <mat-label>Enter your email</mat-label>
                         <input matInput
@@ -80,14 +80,14 @@
                                placeholder="pat@example.com"
                                formControlName="correo">
                     </mat-form-field>
-                    <mat-slide-toggle formControlName="tiene_discapacidad">Presenta alguna Discapacidad</mat-slide-toggle> 
+                    <mat-slide-toggle formControlName="tiene_discapacidad">Presenta alguna Discapacidad</mat-slide-toggle>
                 <!--</div>-->
             </div>
             <div class="d-flex justify-content-end">
                 <button mat-raised-button color="primary" [disabled]="!estudianteForm.valid">Guardar</button>
             </div>
         </form>
-    </mat-card-content>    
+    </mat-card-content>
 </mat-card>
 
 

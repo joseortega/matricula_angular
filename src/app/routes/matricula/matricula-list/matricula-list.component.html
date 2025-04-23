@@ -85,6 +85,19 @@
         <td mat-cell *matCellDef="let matricula"> {{matricula.grado_escolar.descripcion}} </td>
       </ng-container>
 
+      <!-- Weight Column -->
+      <ng-container matColumnDef="esta_activa">
+        <th mat-header-cell *matHeaderCellDef> Está Activa? </th>
+
+        <td mat-cell *matCellDef="let matricula">
+          @if (matricula.esta_activa){
+            <mat-icon matChipAvatar>check_circle</mat-icon>
+          } @else {
+            <mat-icon matChipAvatar>cancel</mat-icon>
+          }
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row
           (click)="selectMatricula(row)"

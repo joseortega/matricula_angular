@@ -35,8 +35,12 @@ export class AuthService {
 
   login(username: string, password: string, rememberMe = false) {
     return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
+      tap(token => {
+        this.tokenService.set(token);
+      }),
+      map(() => {
+        return this.check()
+      })
     );
   }
 

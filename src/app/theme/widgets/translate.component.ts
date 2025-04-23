@@ -29,13 +29,14 @@ export class TranslateComponent {
   private readonly settings = inject(SettingsService);
 
   langs = {
+    'es-EC': 'Español',
     'en-US': 'English',
     'zh-CN': '中文简体',
     'zh-TW': '中文繁体',
   };
 
   constructor() {
-    this.translate.addLangs(['en-US', 'zh-CN', 'zh-TW']);
+    this.translate.addLangs(['es-EC', 'en-US', 'zh-CN', 'zh-TW']);
   }
 
   useLanguage(language: string) {

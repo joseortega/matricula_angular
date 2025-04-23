@@ -1,5 +1,6 @@
 <page-header title="Matriculas" subtitle="Nueva Matricula" ></page-header>
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="onTabChange($event)">
+
   <mat-tab label="Informacion del Estudiante">
     <ng-template matTabContent>
       <div class="tab-content">
@@ -29,6 +30,7 @@
       </div>
     </ng-template>
   </mat-tab>
+
   <mat-tab [disabled]='!matricula.estudiante.id' label="Informacion del Representante">
     <ng-template matTabContent>
       <div class="tab-content">
@@ -58,6 +60,7 @@
       </div>
     </ng-template>
   </mat-tab>
+
   <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Datos de Matrícula">
     <ng-template matTabContent>
       <div class="tab-content">
@@ -67,6 +70,7 @@
       </div>
     </ng-template>
   </mat-tab>
+
   <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Revisión de documentación">
     <ng-template matTabContent>
       <div class="tab-content">
@@ -76,6 +80,7 @@
       </div>
     </ng-template>
   </mat-tab>
+
   <mat-tab [disabled]='!matricula.id' label="Impresion de Documentos">
     <ng-template matTabContent>
       <div class="tab-content">
@@ -85,5 +90,16 @@
       </div>
     </ng-template>
   </mat-tab>
+
+  <mat-tab [disabled]='!matricula.id' label="Administrar Mátricula">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <app-matricula-admin
+          [matricula]="matricula">
+        </app-matricula-admin>
+      </div>
+    </ng-template>
+  </mat-tab>
+
 </mat-tab-group>
 

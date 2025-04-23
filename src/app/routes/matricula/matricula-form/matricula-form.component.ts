@@ -25,7 +25,9 @@ import { MY_DATE_FORMATS } from 'app/my-date-formats';
 import { DateAdapter } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { notNullValidator } from 'app/validators/not-null-validator';
-import { MATRICULA_ESTADO } from 'app/models/matricula-estado';
+import {
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-matricula-form',
@@ -40,7 +42,8 @@ import { MATRICULA_ESTADO } from 'app/models/matricula-estado';
         AsyncPipe,
         MatCardModule,
         MatButtonModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        MatSlideToggleModule,
         ],
   templateUrl: './matricula-form.component.html',
   styleUrl: './matricula-form.component.css',
@@ -59,10 +62,6 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
     public grado_escolares$: Observable<GradoEscolar[]> = new Observable<GradoEscolar[]>;
     public jornadas$: Observable<Jornada[]> = new Observable<Jornada[]>;
     public paralelos$: Observable<Paralelo[]> = new Observable<Paralelo[]>;
-    public estados: string[] = [MATRICULA_ESTADO.preinscripción,
-                                MATRICULA_ESTADO.pendiente,
-                                MATRICULA_ESTADO.completada
-                                ];
 
     @Input() matricula: Matricula= new Matricula();
     @Output() submittedEvent = new EventEmitter<Matricula>();
@@ -74,7 +73,7 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
        grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar(), [Validators.required, notNullValidator()]),
        jornada: new FormControl<Jornada>(new Jornada(), [Validators.required, notNullValidator()]),
        paralelo: new FormControl<Paralelo>(new Paralelo(), [Validators.required, notNullValidator()]),
-       estado: new FormControl<string | undefined>("", Validators.required),
+       esta_activa: new FormControl<boolean>(true, Validators.required),
        observacion: new FormControl<string>(''),
     });
 
@@ -106,7 +105,7 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
                     grado_escolar: this.matricula.grado_escolar,
                     jornada: this.matricula.jornada,
                     paralelo: this.matricula.paralelo,
-                    estado: this.matricula.estado || '',
+                    esta_activa: this.matricula.esta_activa,
                     observacion: this.matricula.observacion || ''
                     });
             }

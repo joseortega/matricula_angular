@@ -14,7 +14,7 @@ export class Matricula {
    grado_escolar: GradoEscolar;
    jornada: Jornada;
    paralelo: Paralelo;
-   estado: string | undefined;
+   esta_activa: boolean;
    observacion: string | undefined;
 
    public constructor() {
@@ -25,5 +25,6 @@ export class Matricula {
        this.grado_escolar = new GradoEscolar();
        this.jornada = new Jornada();
        this.paralelo = new Paralelo();
+       this.esta_activa = true;
     }
 }

@@ -19,6 +19,7 @@ import { MatriculaShowComponent } from '../matricula-show/matricula-show.compone
 import { EstudianteRepresentantePrincipalComponent } from "../../estudiante-representante/estudiante-representante-principal/estudiante-representante-principal.component";
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDivider} from "@angular/material/divider";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-matricula-new',

@@ -1,20 +1,10 @@
 {
   "menu": [
     {
-      "route": "dashboard",
-      "name": "dashboard",
-      "type": "link",
-      "icon": "dashboard",
-      "badge": {
-        "color": "red-50",
-        "value": "5"
-      }
-    },
-    {
       "route": "matricula",
       "name": "matricula",
       "type": "link",
-      "icon": "home",
+      "icon": "format_list_bulleted_add",
       "badge": {
         "color": "red-50",
         "value": "5"
@@ -22,23 +12,18 @@
     },
     {
       "route": "/",
-      "name": "sessions",
+      "name": "expediente-academico",
       "type": "sub",
       "icon": "question_answer",
       "children": [
         {
           "route": "403",
-          "name": "403",
+          "name": "expediente-recibido",
           "type": "link"
         },
         {
           "route": "404",
-          "name": "404",
-          "type": "link"
-        },
-        {
-          "route": "500",
-          "name": "500",
+          "name": "expediente-retirado",
           "type": "link"
         }
       ]

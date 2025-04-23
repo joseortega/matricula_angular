@@ -52,8 +52,8 @@ import { notNullValidator } from 'app/validators/not-null-validator';
 
 export class EstudianteFormComponent implements OnInit, OnChanges{
 
-    public nacionalidades$: Observable<Nacionalidad[]> = new Observable<Nacionalidad[]>
-    public uniformeTallas$: Observable<UniformeTalla[]> = new Observable<UniformeTalla[]>
+    public nacionalidades$: Observable<Nacionalidad[]> = new Observable<Nacionalidad[]>;
+    public uniformeTallas$: Observable<UniformeTalla[]> = new Observable<UniformeTalla[]>;
     public sexos: string[]=[SEXO.hombre, SEXO.mujer];
 
     @Input() estudiante: Estudiante= new Estudiante();
@@ -64,13 +64,14 @@ export class EstudianteFormComponent implements OnInit, OnChanges{
        apellidos: new FormControl<string>('', Validators.required),
        nombres: new FormControl<string>('', Validators.required),
        sexo: new FormControl<any>('', Validators.required),
-       fecha_nacimiento:  new FormControl<Date | string>(new Date(),  Validators.required),
+       fecha_nacimiento:  new FormControl<Date | string | null>(null,  Validators.required),
        nacionalidad: new FormControl<Nacionalidad>(new Nacionalidad(), [Validators.required, notNullValidator()]),
-       lugar_residencia: new FormControl<string>('', Validators.required),
+       uniforme_talla: new FormControl<UniformeTalla | null>(null),
+       direccion: new FormControl<string>(''),
        telefono: new FormControl<string>(''),
        correo: new FormControl<string>(''),
        tiene_discapacidad: new FormControl<boolean>(false),
-       uniforme_talla: new FormControl<UniformeTalla | null>(null),
+
     });
 
     constructor(private nacionalidadService: NacionalidadService,
@@ -91,7 +92,7 @@ export class EstudianteFormComponent implements OnInit, OnChanges{
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-      if (changes['estudiante']) {
+      if (changes.estudiante) {
           if (changes.estudiante.currentValue) {
               this.estudianteForm.patchValue(this.estudiante);
           }

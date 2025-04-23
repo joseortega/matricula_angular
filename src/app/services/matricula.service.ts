@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import {Observable, catchError} from 'rxjs';
-
-import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
-import { Estudiante } from '../models/estudiante';
+import { Observable } from 'rxjs';
 import { Matricula } from '../models/matricula';
 import { MatriculaFilter } from 'app/filters/matricula-filter';
 
@@ -13,15 +9,17 @@ import { MatriculaFilter } from 'app/filters/matricula-filter';
 })
 export class MatriculaService {
 
-     private urlBase: string;
-     private handleError: HandleError;
-
-  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
-       this.urlBase= 'https://localhost:8000';
-       this.handleError = httpErrorHandler.createHandleError('EstudianteService')
+  constructor(private http: HttpClient) {
    }
 
-   getList(pageIndex: number, pageSize: number, matriculaFilter: MatriculaFilter): Observable<any>{
+   /**
+ * Obtiene la lista paginada de matrículas aplicando los filtros especificados
+ * @param pageIndex Número de página actual
+ * @param pageSize Cantidad de registros por página
+ * @param matriculaFilter Filtros a aplicar en la búsqueda
+ * @returns Observable con los resultados paginados
+ */
+getList(pageIndex: number, pageSize: number, matriculaFilter: MatriculaFilter): Observable<any>{
         let params = new HttpParams();
 
          if (matriculaFilter.periodo_lectivo && matriculaFilter.periodo_lectivo.id !== undefined) {
@@ -37,29 +35,60 @@ export class MatriculaService {
         params = params.append('page', pageIndex);
         params = params.append('page_size', pageSize);
 
-        return this.http.get<any>(`${this.urlBase}/api/matricula`, { params });
+        return this.http.get<any>(`/matricula`, { params });
     }
 
-    create(matricula: Matricula): Observable<Matricula>{
-        return this.http.post<Matricula>(`${this.urlBase}/api/matricula/create`, matricula);
+    /**
+ * Crea una nueva matrícula en el sistema
+ * @param matricula Datos de la matrícula a crear
+ * @returns Observable con la matrícula creada
+ */
+create(matricula: Matricula): Observable<Matricula>{
+        return this.http.post<Matricula>(`/matricula/create`, matricula);
     }
 
-    update(id: any, matricula: Matricula): Observable<Matricula>{
-      return this.http.put<Matricula>(`${this.urlBase}/api/matricula/update/${id}`, matricula);
+    /**
+ * Actualiza una matrícula existente
+ * @param id ID de la matrícula a actualizar
+ * @param matricula Nuevos datos de la matrícula
+ * @returns Observable con la matrícula actualizada
+ */
+update(id: any, matricula: Matricula): Observable<Matricula>{
+      return this.http.put<Matricula>(`/matricula/update/${id}`, matricula);
     }
 
-    getById(id: number): Observable<Matricula>{
-        return this.http.get<Matricula>(`${this.urlBase}/api/matricula/${id}`);
+    /**
+ * Obtiene una matrícula por su ID
+ * @param id ID de la matrícula a buscar
+ * @returns Observable con la matrícula encontrada
+ */
+getById(id: number): Observable<Matricula>{
+        return this.http.get<Matricula>(`/matricula/${id}`);
     }
 
-    pdfCertificadoMatricula(id: number): Observable<Blob>{
+    /**
+ * Genera el PDF del certificado de matrícula
+ * @param id ID de la matrícula
+ * @returns Observable con el blob del PDF generado
+ */
+pdfCertificadoMatricula(id: number): Observable<Blob>{
 
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
       });
 
-      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf-certificado-matricula/${id}`, { headers, responseType: 'blob' as 'json' });
+      return this.http.get<Blob>(`/matricula/pdf-certificado-matricula/${id}`, { headers, responseType: 'blob' as 'json' });
+    }
+
+    pdfCertificadoMatriculaAsistencia(id: number): Observable<Blob>{
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
+      });
+
+      return this.http.get<Blob>(`/matricula/pdf-certificado-matricula-asistencia/${id}`, { headers, responseType: 'blob' as 'json' });
     }
 
     pdfCartaAutorizacion(id: number): Observable<Blob>{
@@ -69,7 +98,7 @@ export class MatriculaService {
         'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
       });
 
-      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf-carta-autorizacion/${id}`, { headers, responseType: 'blob' as 'json' });
+      return this.http.get<Blob>(`/matricula/pdf-carta-autorizacion/${id}`, { headers, responseType: 'blob' as 'json' });
     }
 
     pdfActaCompromiso(id: number): Observable<Blob>{
@@ -79,6 +108,6 @@ export class MatriculaService {
         'Accept': 'application/pdf'  // Asegúrate de que el backend responda con PDF
       });
 
-      return this.http.get<Blob>(`${this.urlBase}/api/matricula/pdf-acta-compromiso/${id}`, { headers, responseType: 'blob' as 'json' });
+      return this.http.get<Blob>(`/matricula/pdf-acta-compromiso/${id}`, { headers, responseType: 'blob' as 'json' });
     }
 }

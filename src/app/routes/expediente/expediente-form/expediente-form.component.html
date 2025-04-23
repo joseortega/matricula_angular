@@ -1,11 +1,19 @@
 <mat-card>
   <mat-card-content>
     <form class="form-field-full" [formGroup]="expedienteForm" (ngSubmit)="submit()">
+      <p>Marque la documentación recibida</p>
       <mat-selection-list formControlName="requisitos" [compareWith]="compareObjects">
         @for (requisito of requisitos$ | async; track requisito ) {
           <mat-list-option [value]="requisito">{{requisito.descripcion}}</mat-list-option>
         }
       </mat-selection-list>
+
+      <p></p>
+      <mat-slide-toggle formControlName="esta_completo">
+        Habilite esta opción sin la documentación requerida y recibida está completa, caso contrario debe estar deshabilitado y solicite al representante completar con la documentación necesaria
+      </mat-slide-toggle>
+      <p></p>
+
       <mat-form-field>
         <mat-label>Observación</mat-label>
         <textarea matInput placeholder="Escriba cualquier observación, Ej. Falta doc" formControlName="observacion"></textarea>

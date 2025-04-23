@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
+import { Message} from "../../models/message";
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -18,16 +19,18 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private readonly errorPages = [STATUS.FORBIDDEN, STATUS.NOT_FOUND, STATUS.INTERNAL_SERVER_ERROR];
 
-  private getMessage = (error: HttpErrorResponse) => {
-    if (error.error?.message) {
-      return error.error.message;
+  private getMessage = (error: HttpErrorResponse) : Message => {
+    const message: Message = new Message();
+    if (error.error instanceof ErrorEvent) {
+      message.title = 'An unexpected error occurred.';
+      message.description = error.error.message || 'Error de red o del cliente.';
+
+    } else {
+      message.title = `Error ${error.status}` || 'Server Error';
+      message.description = error.error?.detail || error.message || 'Ha ocurrido un error desconocido.';
     }
 
-    if (error.error?.msg) {
-      return error.error.msg;
-    }
-
-    return `${error.status} ${error.statusText}`;
+    return message;
   };
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
@@ -38,13 +41,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handleError(error: HttpErrorResponse) {
     if (this.errorPages.includes(error.status)) {
-      /*this.toast.error(this.getMessage(error));*//*condigo mio*/
-      /*this.router.navigateByUrl(`/${error.status}`, {
-        skipLocationChange: true,
-      });*/
+      this.router.navigateByUrl(`/${error.status}`, {skipLocationChange: true,});
     } else {
-      console.error('ERROR', error);
-      this.toast.error(this.getMessage(error));
+      const message: Message = this.getMessage(error);
+      this.toast.error(message.description, message.title);
       if (error.status === STATUS.UNAUTHORIZED) {
         this.router.navigateByUrl('/auth/login');
       }

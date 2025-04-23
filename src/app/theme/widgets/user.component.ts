@@ -12,7 +12,7 @@ import { AuthService, SettingsService, User } from '@core';
   selector: 'app-user',
   template: `
     <button mat-icon-button [matMenuTriggerFor]="menu">
-      <img class="avatar" [src]="user.avatar" width="24" alt="avatar" />
+      <img class="avatar" [src]="user.avatar || defaultAvatar" width="24" alt="avatar" />
     </button>
 
     <mat-menu #menu="matMenu">
@@ -45,6 +45,9 @@ import { AuthService, SettingsService, User } from '@core';
   imports: [RouterLink, MatButtonModule, MatIconModule, MatMenuModule, TranslateModule],
 })
 export class UserComponent implements OnInit {
+
+  defaultAvatar: string = 'images/avatar.jpg';
+
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);

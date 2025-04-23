@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
-import {Observable, catchError} from 'rxjs';
-
-import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
+import { Observable } from 'rxjs';
 import { EstudianteRepresentante } from 'app/models/EstudianteRepresentante';
-import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -13,57 +9,38 @@ import {map} from "rxjs/operators";
 
 export class EstudianteRepresentanteService {
 
-private urlBase: string;
-     private handleError: HandleError;
-
-  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
-       this.urlBase= 'https://localhost:8000';
-       this.handleError = httpErrorHandler.createHandleError('EstudianteRepresentanteService')
+  constructor(private http: HttpClient) {
    }
 
    getList(estudianteId: number): Observable<EstudianteRepresentante[]>{
-      return this.http.get<EstudianteRepresentante[]>(`${this.urlBase}/api/estudiante/${estudianteId}/representante`).pipe(
-        catchError(this.handleError<any>('getList', []))
-      );
+      return this.http.get<EstudianteRepresentante[]>(`/estudiante/${estudianteId}/representante`);
    }
 
     getAlternativos(estudianteId: number): Observable<EstudianteRepresentante[]>{
-       return this.http.get<EstudianteRepresentante[]>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/alternativos`).pipe(
-        catchError(this.handleError<any>('getList', []))
-      );
+       return this.http.get<EstudianteRepresentante[]>(`/estudiante/${estudianteId}/representante/alternativos`);
     }
 
     getById(id: number): Observable<EstudianteRepresentante>{
-      return this.http.get<EstudianteRepresentante>(`${this.urlBase}/api/estudiante-representante/${id}`).pipe(
-        catchError(this.handleError<any>('getById', []))
-      );
+      return this.http.get<EstudianteRepresentante>(`/estudiante-representante/${id}`);
     }
 
     getPrincipal(estudianteId: number): Observable<EstudianteRepresentante>{
-      return this.http.get<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/principal`);
+      return this.http.get<EstudianteRepresentante>(`/estudiante/${estudianteId}/representante/principal`);
     }
 
     create(estudianteId: number, estudianteRepresentante: EstudianteRepresentante): Observable<EstudianteRepresentante>{
-        return this.http.post<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/create`, estudianteRepresentante)
-            .pipe(
-                catchError(this.handleError<any>('create', []))
-      );
+        return this.http.post<EstudianteRepresentante>(`/estudiante/${estudianteId}/representante/create`, estudianteRepresentante);
     }
 
     update(estudianteId: number, id: number, estudianteRepresentante: EstudianteRepresentante): Observable<EstudianteRepresentante>{
-      return this.http.put<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/update/${id}`, estudianteRepresentante)
-        .pipe(
-            catchError(this.handleError<any>('update', []))
-      );
+      return this.http.put<EstudianteRepresentante>(`/estudiante/${estudianteId}/representante/update/${id}`, estudianteRepresentante);
     }
 
     delete(estudianteId: number, id: number): Observable<EstudianteRepresentante>{
-        return this.http.delete<EstudianteRepresentante>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/delete/${id}`).pipe(
-        catchError(this.handleError<any>('delete', []))
-        );
+      return this.http.delete<EstudianteRepresentante>(`/estudiante/${estudianteId}/representante/delete/${id}`);
     }
 
     existePrincipal(estudianteId: number):Observable<boolean>{
-      return this.http.get<boolean>(`${this.urlBase}/api/estudiante/${estudianteId}/representante/existe-principal`);
+      return this.http.get<boolean>(`/estudiante/${estudianteId}/representante/existe-principal`);
     }
 }

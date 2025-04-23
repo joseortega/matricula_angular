@@ -1,0 +1,67 @@
+<page-header title="Expediente" subtitle="Retiro" ></page-header>
+
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Buscar Estudiante</mat-card-title>
+    <mat-card-subtitle>Por cédula o nombres o apellidos</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <app-estudiante-search
+      [estudiante]="estudiante"
+      (selectEstudianteEvent)="selectEstudianteEvent($event)">
+    </app-estudiante-search>
+  </mat-card-content>
+</mat-card>
+
+<mat-accordion class="example-headers-align" multi="false">
+  <mat-expansion-panel [disabled]='!estudiante.id'>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Estudiante</mat-panel-title>
+      <mat-panel-description>
+        Datos del estudiante
+        <mat-icon>person</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    @if(estudiante.id){
+      <app-estudiante-show
+        [estudiante]="estudiante"
+        (updateEstudianteEvent)="updateEstudianteEvent($event)">
+      </app-estudiante-show>
+    }
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [disabled]='!estudiante.id'>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Representate</mat-panel-title>
+      <mat-panel-description>
+        Datos del representante principal
+        <mat-icon>group</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      @if(estudiante.id){
+        <app-estudiante-representante-principal
+          [estudiante]="estudiante"
+          (newEstudianteRepresentanteEvent)="($event)">
+        </app-estudiante-representante-principal>
+      }
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [disabled]='!existeEstudianteRepresentaPrincipal'>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Expediente</mat-panel-title>
+      <mat-panel-description>
+        Retiro de Expediente
+        <mat-icon>drive_file_move</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      @if(estudiante.id){
+        <app-expediente-new
+          [estudiante]="estudiante">
+        </app-expediente-new>
+      }
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

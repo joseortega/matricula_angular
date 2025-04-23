@@ -8,7 +8,7 @@
         <mat-list>
           <mat-list-item>
             <span matListItemTitle>{{matricula.fecha}}</span>
-            <span matListItemLine>Fecha</span>
+            <span matListItemLine>Fecha Matricula</span>
           </mat-list-item>
           <mat-list-item>
             <span matListItemTitle>{{matricula.periodo_lectivo.descripcion}}</span>
@@ -19,7 +19,11 @@
             <span matListItemLine>Modalidad</span>
           </mat-list-item>
           <mat-list-item>
-            <span matListItemTitle>{{matricula.estado}}</span>
+            @if(matricula.esta_activa){
+              <span matListItemTitle>ACTIVA</span>
+            } @else {
+              <span matListItemTitle>INACTIVA</span>
+            }
             <span matListItemLine>Estado de Matricula</span>
           </mat-list-item>
         </mat-list>
@@ -39,7 +43,11 @@
             <span matListItemLine>Paralelo</span>
           </mat-list-item>
           <mat-list-item>
-            <span matListItemTitle>{{matricula.observacion}}</span>
+            @if(matricula.observacion){
+              <span matListItemTitle>{{matricula.observacion}}</span>
+            } @else {
+              <span matListItemTitle>NINGUNA</span>
+            }
             <span matListItemLine>Observacion</span>
           </mat-list-item>
         </mat-list>

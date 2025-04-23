@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Expediente} from "../../../models/expediente";
 import {MatButton} from "@angular/material/button";
 import {MatCard, MatCardContent} from "@angular/material/card";
@@ -8,10 +8,10 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {MatListOption, MatSelectionList} from "@angular/material/list";
 import {Observable} from "rxjs";
-import {Nacionalidad} from "../../../models/nacionalidad";
 import {Requisito} from "../../../models/requisito";
 import {RequisitoService} from "../../../services/requisito.service";
 import {AsyncPipe} from "@angular/common";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-expediente-form',
@@ -28,7 +28,8 @@ import {AsyncPipe} from "@angular/common";
     ReactiveFormsModule,
     MatSelectionList,
     MatListOption,
-    AsyncPipe
+    AsyncPipe,
+    MatSlideToggle
   ],
   templateUrl: './expediente-form.component.html',
   styleUrl: './expediente-form.component.css'
@@ -41,6 +42,7 @@ export class ExpedienteFormComponent implements OnChanges{
 
   expedienteForm = new FormGroup({
     requisitos: new FormControl<Requisito[]>([]),
+    esta_completo: new FormControl<boolean>(false),
     observacion: new FormControl<string>(''),
   });
 
@@ -56,8 +58,10 @@ export class ExpedienteFormComponent implements OnChanges{
       if (changes.expediente.currentValue) {
         this.expedienteForm.patchValue({
           requisitos: this.expediente.requisitos,
-          observacion: this.expediente.observacion || ''
+          esta_completo: this.expediente.esta_completo,
+          observacion: this.expediente.observacion || '',
         });
+        //this.expedienteForm.disable();
       }
     }
   }
@@ -65,12 +69,9 @@ export class ExpedienteFormComponent implements OnChanges{
   submit(): void{
     this.expediente = Object.assign(this.expediente, this.expedienteForm.value);
     this.submittedEvent.emit( this.expediente);
-
-    console.log(this.expediente);
   }
 
   compareObjects(option1: any, option2: any): boolean {
     return option1 && option2 && option1.id === option2.id;
   }
-
 }

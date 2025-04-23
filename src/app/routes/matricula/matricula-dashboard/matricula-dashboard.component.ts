@@ -24,6 +24,10 @@ import {MatriculaDocComponent} from "../matricula-doc/matricula-doc.component";
 import {MatriculaNewComponent} from "../matricula-new/matricula-new.component";
 import {EstudianteRepresentante} from "../../../models/EstudianteRepresentante";
 import {ExpedienteNewComponent} from "../../expediente/expediente-new/expediente-new.component";
+import {ExpedienteService} from "../../../services/expediente.service";
+import {ExpedienteShowComponent} from "../../expediente/expediente-show/expediente-show.component";
+import {MatriculaAdminComponent} from "../matricula-admin/matricula-admin.component";
+
 
 @Component({
   selector: 'app-matricula-dashboard',
@@ -40,7 +44,7 @@ import {ExpedienteNewComponent} from "../../expediente/expediente-new/expediente
     MatriculaFormComponent,
     MatriculaShowComponent,
     EstudianteRepresentantePrincipalComponent,
-    MatExpansionModule, MatDivider, MatriculaDocComponent, MatriculaNewComponent, ExpedienteNewComponent,
+    MatExpansionModule, MatDivider, MatriculaDocComponent, MatriculaNewComponent, ExpedienteNewComponent, ExpedienteShowComponent, MatriculaAdminComponent,
   ],
   templateUrl: './matricula-dashboard.component.html',
   styleUrl: './matricula-dashboard.component.css'
@@ -48,11 +52,13 @@ import {ExpedienteNewComponent} from "../../expediente/expediente-new/expediente
 export class MatriculaDashboardComponent implements OnInit {
   public matricula: Matricula = new Matricula();
   public existeEstudianteRepresentaPrincipal: boolean = false;
+  public existeExpediente: boolean = true;
 
   readonly panelOpenState = signal(false);
 
   constructor(private matriculaService: MatriculaService,
               private estudianteRepresentanteService: EstudianteRepresentanteService,
+              private expedienteService: ExpedienteService,
               private toastrService: ToastrService,
               private route: ActivatedRoute,
               private router: Router,
@@ -66,6 +72,14 @@ export class MatriculaDashboardComponent implements OnInit {
       this.getMatricula(matriculaId);
       this.existeEstudianteRepresentaPrincipal=true;
     }
+  }
+
+  getMatricula(matriculaId: number): void{
+    this.matriculaService.getById(matriculaId).subscribe({
+      next: data => {
+        this.matricula = data;
+      }
+    });
   }
 
   selectEstudianteEvent(estudiante: Estudiante){
@@ -88,7 +102,6 @@ export class MatriculaDashboardComponent implements OnInit {
   }
 
   verficaEstudianteRepresentaPrincipal(){
-    console.log(this.matricula.estudiante.id);
     this.estudianteRepresentanteService.existePrincipal(Number(this.matricula.estudiante.id)).subscribe({
       next: data => {
         this.existeEstudianteRepresentaPrincipal = data;
@@ -96,12 +109,18 @@ export class MatriculaDashboardComponent implements OnInit {
     });
   }
 
-  getMatricula(matriculaId: number): void{
-    this.matriculaService.getById(matriculaId).subscribe({
+  verificaExpediente(){
+    this.expedienteService.exists(Number(this.matricula.estudiante.id)).subscribe({
       next: data => {
-        this.matricula = data;
+        this.existeExpediente = data;
       }
     });
   }
 
+  onTabChange(event: any): void {
+    // Verifica que el tab seleccionado sea el de revisión de documentación.
+    if (event.tab.textLabel === 'Revisión de documentación') {
+      this.verificaExpediente();
+    }
+  }
 }

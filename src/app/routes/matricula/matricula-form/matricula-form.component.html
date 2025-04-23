@@ -73,19 +73,16 @@
           <div class="row">
             <div class="col-sm-6">
               <mat-form-field>
-                <mat-label>Estado</mat-label>
-                <mat-select formControlName="estado" required>
-                  @for (estado of estados; track estado) {
-                    <mat-option [value]="estado">{{estado}}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-              <mat-form-field>
                 <mat-label>Observación</mat-label>
                 <textarea matInput placeholder="Escriba cualquier observación, Ej. Falta doc" formControlName="observacion"></textarea>
               </mat-form-field>
+            </div>
+
+            <div class="col-sm-6">
+              Ativar o Inactivar Matrícula
+              <mat-slide-toggle formControlName="esta_activa">
+                Si el estudiante asiste con normalidad mantenga activada esta opción, si el estudiante se ha retirado o no asiste deshabilite esta opción
+              </mat-slide-toggle>
             </div>
 
           </div>

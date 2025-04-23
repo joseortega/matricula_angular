@@ -58,7 +58,7 @@ export class EstudianteRepresentanteNewComponent implements OnInit{
             next: data => {
                 this.estudianteRepresentante = data;
                 this.toastrService.success('El elemento fue actualizado correctamente!', 'Éxito!', {"closeButton": true});
-                 this.newEstudianteRepresentanteEvent.emit(this.estudianteRepresentante);
+                this.newEstudianteRepresentanteEvent.emit(this.estudianteRepresentante);
             }
         });
     }

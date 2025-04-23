@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
 import {Observable, catchError} from 'rxjs';
 
@@ -11,17 +10,10 @@ import { PeriodoLectivo } from '../models/periodo-lectivo';
 })
 export class PeriodoLectivoService {
 
-     private urlBase: string;
-     private handleError: HandleError;
+  constructor(private http: HttpClient) {
+  }
 
-  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
-       this.urlBase= 'https://localhost:8000';
-       this.handleError = httpErrorHandler.createHandleError('PeriodoLectivoService')
-   }
-
-   getList(): Observable<PeriodoLectivo[]>{
-        return this.http.get<PeriodoLectivo[]>(`${this.urlBase}/api/periodo-lectivo`).pipe(
-        catchError(this.handleError<any>('getList', []))
-      );
-    }
+  getList(): Observable<PeriodoLectivo[]>{
+    return this.http.get<PeriodoLectivo[]>(`/periodo-lectivo`);
+  }
 }
