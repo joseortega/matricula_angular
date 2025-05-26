@@ -24,7 +24,7 @@ export class Estudiante {
      * Retorna el nombre completo del estudiante combinando identificación, nombres y apellidos
      * @returns string con el nombre completo formateado
      */
-    public fullName(){
+    get fullName(){
         return this.identificacion+' '+this.nombres+' '+this.apellidos;
     }
 }

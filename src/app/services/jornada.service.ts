@@ -12,6 +12,6 @@ export class JornadaService {
   }
 
   getList(): Observable<Jornada[]>{
-      return this.http.get<Jornada[]>(`/jornada`);
+    return this.http.get<Jornada[]>(`/jornada`);
   }
 }

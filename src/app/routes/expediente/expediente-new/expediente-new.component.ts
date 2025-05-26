@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ExpedienteShowComponent} from "../expediente-show/expediente-show.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
 
 @Component({
   selector: 'app-expediente-new',
@@ -14,7 +15,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [
     ExpedienteFormComponent,
     ExpedienteShowComponent,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCard,
+    MatCardContent,
+    MatCardTitle
   ],
   templateUrl: './expediente-new.component.html',
   styleUrl: './expediente-new.component.css'

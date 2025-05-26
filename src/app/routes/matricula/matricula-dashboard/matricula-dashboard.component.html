@@ -1,4 +1,18 @@
-<page-header title="Matriculas" subtitle="Nueva Matricula" ></page-header>
+@if(!matricula.id){
+  <page-header class="bg-violet-40" title="Matriculas" subtitle="Nueva Matricula" ></page-header>
+} @else {
+  <page-header class="bg-green-60" title="Matriculas" subtitle="Editar Matricula" ></page-header>
+}
+
+@if(matricula.estudiante.id){
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>
+        Estudiante: {{matricula.estudiante.identificacion}}  / {{matricula.estudiante.nombres}} {{matricula.estudiante.apellidos}}
+      </mat-card-title>
+    </mat-card-content>
+  </mat-card>
+}
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="onTabChange($event)">
 
   <mat-tab label="Informacion del Estudiante">
@@ -87,16 +101,6 @@
         <app-matricula-doc
           [matricula]="matricula">
         </app-matricula-doc>
-      </div>
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab [disabled]='!matricula.id' label="Administrar Mátricula">
-    <ng-template matTabContent>
-      <div class="tab-content">
-        <app-matricula-admin
-          [matricula]="matricula">
-        </app-matricula-admin>
       </div>
     </ng-template>
   </mat-tab>

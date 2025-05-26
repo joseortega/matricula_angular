@@ -14,7 +14,9 @@ export class Matricula {
    grado_escolar: GradoEscolar;
    jornada: Jornada;
    paralelo: Paralelo;
-   esta_activa: boolean;
+   estado: string | null;
+   fecha_cambio_estado: Date | string | null;
+   inscrito_en_sistema_publico: boolean;
    observacion: string | undefined;
 
    public constructor() {
@@ -25,6 +27,8 @@ export class Matricula {
        this.grado_escolar = new GradoEscolar();
        this.jornada = new Jornada();
        this.paralelo = new Paralelo();
-       this.esta_activa = true;
+       this.fecha_cambio_estado = new Date();
+       this.inscrito_en_sistema_publico = true;
+       this.estado = null;
     }
 }

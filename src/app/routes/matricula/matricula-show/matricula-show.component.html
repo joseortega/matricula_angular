@@ -19,18 +19,6 @@
             <span matListItemLine>Modalidad</span>
           </mat-list-item>
           <mat-list-item>
-            @if(matricula.esta_activa){
-              <span matListItemTitle>ACTIVA</span>
-            } @else {
-              <span matListItemTitle>INACTIVA</span>
-            }
-            <span matListItemLine>Estado de Matricula</span>
-          </mat-list-item>
-        </mat-list>
-      </div>
-      <div class="col-sm-6">
-        <mat-list>
-          <mat-list-item>
             <span matListItemTitle>{{matricula.jornada.descripcion}}</span>
             <span matListItemLine>Jornada</span>
           </mat-list-item>
@@ -38,9 +26,29 @@
             <span matListItemTitle>{{matricula.grado_escolar.descripcion}}</span>
             <span matListItemLine>Grado Escolar</span>
           </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="col-sm-6">
+        <mat-list>
           <mat-list-item>
             <span matListItemTitle>{{matricula.paralelo.descripcion}}</span>
             <span matListItemLine>Paralelo</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.estado}}</span>
+            <span matListItemLine>Estado de Matrícula</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.fecha_cambio_estado}}</span>
+            <span matListItemLine>Fecha Cambio de Estado</span>
+          </mat-list-item>
+          <mat-list-item>
+            @if(matricula.inscrito_en_sistema_publico){
+              <span matListItemTitle>SI</span>
+            } @else {
+              <span matListItemTitle>NO</span>
+            }
+            <span matListItemLine>Inscrito en el CAS</span>
           </mat-list-item>
           <mat-list-item>
             @if(matricula.observacion){

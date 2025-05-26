@@ -22,6 +22,9 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatriculaFilter } from 'app/filters/matricula-filter';
 import {MatChip, MatChipAvatar, MatChipSet} from "@angular/material/chips";
+import {Paralelo} from "../../../models/paralelo";
+import {ParaleloService} from "../../../services/paralelo.service";
+import {MATRICULA_ESTADOS} from "../../../models/matricula-estados";
 
 @Component({
   selector: 'app-matricula-list',
@@ -56,25 +59,38 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public matriculas: Matricula[] = [];
 
     //filters
-    matriculaFilter: MatriculaFilter = {grado_escolar: new GradoEscolar(),periodo_lectivo: new PeriodoLectivo(), search_term: ''};
+    matriculaFilter: MatriculaFilter = {grado_escolar: new GradoEscolar(),periodo_lectivo: new PeriodoLectivo(), paralelo: new Paralelo(), estado: '', search_term: ''};
     matriculaFilterForm = new FormGroup({
         periodo_lectivo: new FormControl<PeriodoLectivo>(new PeriodoLectivo()),
         grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar()),
+        paralelo: new FormControl<Paralelo>(new Paralelo()),
+        estado: new FormControl<string>(''),
         search_term: new FormControl('')
     });
 
 
     public periodoLectivoList$: Observable<PeriodoLectivo[]>=new Observable<PeriodoLectivo[]>;
     public gradoEscolarList$: Observable<GradoEscolar[]>=new Observable<GradoEscolar[]>;
+    public paraleloList$: Observable<Paralelo[]>=new Observable<Paralelo[]>;
+    public estadoList: string[] = [];
 
     public dataSource = new MatTableDataSource<Matricula>();
     @ViewChild(MatPaginator) private paginator!: MatPaginator;
 
-    displayedColumns: string[] = ['periodo_lectivo', 'identificacion', 'nombres', 'apellidos', "grado_escolar", "esta_activa"];
+    displayedColumns: string[] = [
+      'periodo_lectivo',
+      'identificacion',
+      'nombres',
+      'apellidos',
+      "grado_escolar",
+      "estado",
+      "inscrito_en_sistema_publico",
+    ];
 
     constructor(private matriculaService: MatriculaService,
                  private periodoLectivoService: PeriodoLectivoService,
                  private gradoEscolarService: GradoEscolarService,
+                 private paraleloService: ParaleloService,
                  private route: ActivatedRoute,
                  private router: Router){
     }
@@ -87,6 +103,9 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
         //filters
         this.gradoEscolarList$ = this.gradoEscolarService.getList();
         this.periodoLectivoList$ = this.periodoLectivoService.getList();
+        this.paraleloList$ = this.paraleloService.getList();
+        this.estadoList = Object.values(MATRICULA_ESTADOS);
+
         //matricula list
         this.getMatriculaList();
     }
@@ -143,6 +162,8 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
         this.matriculaFilter = {
             periodo_lectivo: formValues.periodo_lectivo,
             grado_escolar: formValues.grado_escolar,
+            paralelo: formValues.paralelo,
+            estado: formValues.estado,
             search_term: formValues.search_term
         };
         //reseteamos la pagina a 0
@@ -150,6 +171,19 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
 
         //actualizamos la lista de matricula con los filters
         this.getMatriculaList();
+    }
+
+    pdfMatriculaList(){
+      this.matriculaService.pdfMatriculaList(this.matriculaFilter).subscribe({
+        next: data => {
+          // Crear una URL para el Blob y forzar la descarga
+          const url = window.URL.createObjectURL(data);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'matricula_list.pdf';  // Nombre del archivo PDF
+          link.click();
+        }
+      });
     }
 
     /**

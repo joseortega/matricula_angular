@@ -1,22 +1,14 @@
-
-<mat-card>
-    <mat-card-content>
-        <mat-card-title>
-          Estudiante: {{matricula.estudiante.identificacion}}  / {{matricula.estudiante.nombres}} {{matricula.estudiante.apellidos}}
-        </mat-card-title>
-    </mat-card-content>
-</mat-card>
-  @if(matricula.id && !isEditMode){
-    <app-matricula-show
-      [matricula]="matricula"
-      (editMatriculaEvent)="editMatricula($event)">
-    </app-matricula-show>
-  } @else {
-    <app-matricula-form
-      [matricula]="matricula"
-      (submittedEvent)="onSubmitted($event)">
-    </app-matricula-form>
-    }
+@if(matricula.id && !isEditMode){
+  <app-matricula-show
+    [matricula]="matricula"
+    (editMatriculaEvent)="editMatricula($event)">
+  </app-matricula-show>
+} @else {
+  <app-matricula-form
+    [matricula]="matricula"
+    (submittedEvent)="onSubmitted($event)">
+  </app-matricula-form>
+  }
 
 
 

@@ -24,68 +24,64 @@ import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-matricula-new',
   standalone: true,
-  imports: [MatTabsModule,
-    PageHeaderComponent,
-    EstudianteShowComponent,
-    EstudianteSearchComponent,
-    EstudianteRepresentanteListComponent,
+  imports: [
+    MatTabsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
     MatTooltipModule,
     MatriculaFormComponent,
     MatriculaShowComponent,
-    EstudianteRepresentantePrincipalComponent,
-    MatExpansionModule, MatDivider,
+    MatExpansionModule,
   ],
   templateUrl: './matricula-new.component.html',
   styleUrl: './matricula-new.component.css'
 })
 export class MatriculaNewComponent implements OnInit {
+  @Input() matricula: Matricula = new Matricula();
+  public isEditMode: boolean = false;
 
-    @Input() matricula: Matricula = new Matricula();
-    public isEditMode: boolean = false;
+  constructor(
+    private matriculaService: MatriculaService,
+    private toastrService: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
-    constructor(private matriculaService: MatriculaService,
-                private toastrService: ToastrService,
-                private route: ActivatedRoute,
-                private router: Router,
-                public dialog: MatDialog){
-    }
+  ngOnInit(): void {}
 
-    ngOnInit(): void {
-    }
+  editMatricula(editMode: boolean): void {
+    this.isEditMode = editMode;
+  }
 
-    editMatricula(editMode: boolean): void{
-        this.isEditMode = editMode;
+  onSubmitted(matricula: Matricula) {
+    this.matricula = matricula;
+    if (!this.matricula.id) {
+      this.create();
+    } else {
+      this.update();
     }
+  }
 
-    onSubmitted(matricula: Matricula){
-        this.matricula = matricula;
-        if(!this.matricula.id){
-            this.create();
-        }else{
-            this.update();
-        }
-    }
+  create(): void {
+    this.matriculaService.create(this.matricula).subscribe({
+      next: data => {
+        this.matricula = data;
+        this.router.navigate([`matricula/dashboard/edit/${this.matricula.id}`]);
+        this.toastrService.success('El elemento fue creado correctamente!', 'Éxito!', {"closeButton": true});
+        this.isEditMode = false;
+      }
+    });
+  }
 
-    create(): void{
-        this.matriculaService.create(this.matricula).subscribe({
-            next: data => {
-                this.matricula = data;
-                this.router.navigate([`matricula/dashboard/edit/${this.matricula.id}`]);
-                this.toastrService.success('El elemento fue creado correctamente!', 'Éxito!', {"closeButton": true});
-                this.isEditMode = false;
-            }
-        });
-    }
-     update(): void{
-        this.matriculaService.update(this.matricula.id, this.matricula).subscribe({
-            next: data => {
-                this.matricula = data;
-                this.toastrService.success('El elemento fue actualizado correctamente!', 'Éxito!', {"closeButton": true});
-                this.isEditMode = false;
-            }
-        });
-    }
+  update(): void {
+    this.matriculaService.update(this.matricula.id, this.matricula).subscribe({
+      next: data => {
+        this.matricula = data;
+        this.toastrService.success('El elemento fue actualizado correctamente!', 'Éxito!', {"closeButton": true});
+        this.isEditMode = false;
+      }
+    });
+  }
 }

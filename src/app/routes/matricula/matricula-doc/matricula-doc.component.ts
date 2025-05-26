@@ -58,6 +58,19 @@ export class MatriculaDocComponent {
     });
   }
 
+  printCertificadoPreinscripcion(): void{
+    this.matriculaService.pdfCertificadoPreinscripcion(Number (this.matricula.id)).subscribe({
+      next: data => {
+        // Crear una URL para el Blob y forzar la descarga
+        const url = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'certificado_preinscripcion.pdf';  // Nombre del archivo PDF
+        link.click();
+      }
+    });
+  }
+
   printCartaAutorizacion(): void{
     this.matriculaService.pdfCartaAutorizacion(Number (this.matricula.id)).subscribe({
       next: data => {

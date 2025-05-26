@@ -1,4 +1,4 @@
-<page-header title="Expediente" subtitle="Retiro" ></page-header>
+<page-header class="bg-cyan-60" title="Expediente" subtitle="Retiro" ></page-header>
 
 <mat-card appearance="outlined">
   <mat-card-header>
@@ -42,7 +42,7 @@
       @if(estudiante.id){
         <app-estudiante-representante-principal
           [estudiante]="estudiante"
-          (newEstudianteRepresentanteEvent)="($event)">
+          (newEstudianteRepresentanteEvent)="newEstudianteRepresentantePrincipalEvent($event)">
         </app-estudiante-representante-principal>
       }
     </ng-template>
