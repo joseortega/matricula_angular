@@ -83,14 +83,14 @@
       <td mat-cell *matCellDef="let matricula">{{matricula.estudiante.identificacion}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="nombres">
-      <th mat-header-cell *matHeaderCellDef>Nombres</th>
-      <td mat-cell *matCellDef="let matricula">{{matricula.estudiante.nombres}}</td>
-    </ng-container>
-
     <ng-container matColumnDef="apellidos">
       <th mat-header-cell *matHeaderCellDef>Apellidos</th>
       <td mat-cell *matCellDef="let matricula">{{matricula.estudiante.apellidos}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombres">
+      <th mat-header-cell *matHeaderCellDef>Nombres</th>
+      <td mat-cell *matCellDef="let matricula">{{matricula.estudiante.nombres}}</td>
     </ng-container>
 
     <ng-container matColumnDef="grado_escolar">

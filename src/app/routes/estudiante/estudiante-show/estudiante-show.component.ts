@@ -20,13 +20,13 @@ import { EstudianteNewComponent } from '../estudiante-new/estudiante-new.compone
   styleUrl: './estudiante-show.component.css'
 })
 export class EstudianteShowComponent{
-    
+
     @Input() estudiante: Estudiante = new Estudiante();
     @Output() updateEstudianteEvent = new EventEmitter<Estudiante>();
-    
+
     constructor(public dialog: MatDialog){
     }
-    
+
     /**
      * Abre un diálogo para editar el estudiante actual.
      * Emite un evento de actualización del estudiante.
@@ -34,14 +34,15 @@ export class EstudianteShowComponent{
     editEstudiante(): void {
         const dialogRef = this.dialog.open(EstudianteNewComponent, {
           data: this.estudiante,
+          disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe(estudiante => {
            if(estudiante?.id){
                this.estudiante = estudiante;
                this.updateEstudianteEvent.emit(this.estudiante);
-           } 
+           }
         });
     }
-    
+
 }

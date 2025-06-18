@@ -12,6 +12,7 @@ import { Representante } from 'app/models/representante';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter} from "@angular/material/core";
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from "@angular/material-moment-adapter";
 import {MY_DATE_FORMATS} from "../../../my-date-formats";
+import {SEXO} from "../../../models/sexo";
 
 @Component({
   selector: 'app-representante-form',
@@ -42,11 +43,13 @@ export class RepresentanteFormComponent implements OnChanges {
 
     @Input() representante: Representante= new Representante();
     @Output() submittedEvent = new EventEmitter<Representante>();
+    public sexos: string[]=[SEXO.hombre, SEXO.mujer];
 
     representanteForm = new FormGroup({
        identificacion: new FormControl<string>('', Validators.required),
        apellidos: new FormControl<string>('', Validators.required),
        nombres: new FormControl<string>('', Validators.required),
+       sexo: new FormControl<any>('', Validators.required),
        fecha_nacimiento:  new FormControl<Date | string | null>(null),
        direccion: new FormControl<string>(''),
        telefono: new FormControl<string>(''),

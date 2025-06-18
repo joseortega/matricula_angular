@@ -4,6 +4,7 @@ import { Jornada } from "./jornada";
 import { Modalidad } from "./modalidad";
 import { Paralelo } from "./paralelo";
 import { PeriodoLectivo } from "./periodo-lectivo";
+import {MATRICULA_ESTADOS} from "./matricula-estados";
 
 export class Matricula {
    id: number | undefined;
@@ -27,6 +28,7 @@ export class Matricula {
        this.grado_escolar = new GradoEscolar();
        this.jornada = new Jornada();
        this.paralelo = new Paralelo();
+       this.estado= MATRICULA_ESTADOS.PREINSCRIPCION;
        this.fecha_cambio_estado = new Date();
        this.inscrito_en_sistema_publico = true;
        this.estado = null;

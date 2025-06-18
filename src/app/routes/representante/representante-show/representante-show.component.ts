@@ -12,25 +12,25 @@ import { EstudianteRepresentante } from 'app/models/EstudianteRepresentante';
   selector: 'app-representante-show',
   standalone: true,
   imports: [
-        MatListModule, 
-        MatCardModule, 
-        MatButtonModule, 
+        MatListModule,
+        MatCardModule,
+        MatButtonModule,
         MatIconModule
         ],
   templateUrl: './representante-show.component.html',
   styleUrl: './representante-show.component.css'
 })
 export class RepresentanteShowComponent implements OnInit{
-    
+
     @Input() representante: Representante = new Representante();
     @Output() updateRepresentanteEvent = new EventEmitter<Representante>();
 
     constructor(public dialog: MatDialog){
     }
-    
+
     ngOnInit(): void {
     }
-    
+
     /**
      * Abre un diálogo para editar un representante actual.
      * Emite un evento de actualización del representante.
@@ -38,13 +38,14 @@ export class RepresentanteShowComponent implements OnInit{
     editRepresentante(): void {
         const dialogRef = this.dialog.open(RepresentanteNewComponent, {
           data: this.representante,
+          disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe(representante => {
            if(representante?.id){
                this.representante = representante;
                this.updateRepresentanteEvent.emit(this.representante);
-           } 
+           }
         });
     }
 }

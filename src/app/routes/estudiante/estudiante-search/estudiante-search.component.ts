@@ -80,6 +80,7 @@ export class EstudianteSearchComponent implements OnInit, OnChanges{
   newEstudiante(): void {
         const dialogRef = this.dialog.open(EstudianteNewComponent, {
           data: new Estudiante(),
+          disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe(estudiante => {

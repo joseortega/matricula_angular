@@ -16,9 +16,6 @@ import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
     ExpedienteFormComponent,
     ExpedienteShowComponent,
     MatProgressSpinnerModule,
-    MatCard,
-    MatCardContent,
-    MatCardTitle
   ],
   templateUrl: './expediente-new.component.html',
   styleUrl: './expediente-new.component.css'

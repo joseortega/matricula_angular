@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-sm-6">
                     <mat-form-field>
-                        <mat-label>Seleccione la Jornanda</mat-label>
+                        <mat-label>Seleccione la Jornada</mat-label>
                         <mat-select formControlName="jornada" [compareWith]="compareObjects">
                           @for (jornada of jornadas$ | async; track jornada) {
                             <mat-option [value]="jornada">{{jornada.descripcion}}</mat-option>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-sm-6">
                     <mat-form-field>
-                        <mat-label>Seleccione el Paralelor</mat-label>
+                        <mat-label>Seleccione el Paralelo</mat-label>
                         <mat-select formControlName="paralelo" [compareWith]="compareObjects">
                           @for (paralelo of paralelos$  | async; track paralelo) {
                             <mat-option [value]="paralelo">{{paralelo.descripcion}}</mat-option>
@@ -84,7 +84,7 @@
             <div class="col-sm-6">
               Consta en el sistema CAS:
               <mat-slide-toggle formControlName="inscrito_en_sistema_publico">
-                Marque esta casilla si el estudiante está inscrito en el sistema CAS, canso contrario desmarque.
+                Marque esta casilla si el estudiante está inscrito en el sistema CAS, caso contrario desmarque.
               </mat-slide-toggle>
             </div>
           </div>

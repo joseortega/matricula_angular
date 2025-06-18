@@ -80,8 +80,8 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     displayedColumns: string[] = [
       'periodo_lectivo',
       'identificacion',
-      'nombres',
       'apellidos',
+      'nombres',
       "grado_escolar",
       "estado",
       "inscrito_en_sistema_publico",

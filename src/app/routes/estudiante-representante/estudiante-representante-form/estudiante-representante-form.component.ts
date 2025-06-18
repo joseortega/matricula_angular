@@ -95,6 +95,7 @@ export class EstudianteRepresentanteFormComponent implements OnInit, OnChanges{
     newRepresentante(): void {
         const dialogRef = this.dialog.open(RepresentanteNewComponent, {
           data: new Representante(),
+          disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe(representante => {
