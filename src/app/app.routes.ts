@@ -2,6 +2,66 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core';
 import { AdminLayoutComponent } from '@theme/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from '@theme/auth-layout/auth-layout.component';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: [
+      { path: '', redirectTo: 'matricula', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./routes/dashboard/dashboard.component')
+          .then(c => c.DashboardComponent)
+      },
+      {
+        path: 'matricula',
+        loadComponent: () => import('./routes/matricula/matricula-list/matricula-list.component')
+          .then(c => c.MatriculaListComponent)
+      },
+      {
+        path: 'matricula/dashboard/new',
+        loadComponent: () => import('./routes/matricula/matricula-dashboard/matricula-dashboard.component')
+          .then(c => c.MatriculaDashboardComponent)
+      },
+      {
+        path: 'matricula/dashboard/edit/:id',
+        loadComponent: () => import('./routes/matricula/matricula-dashboard/matricula-dashboard.component')
+          .then(c => c.MatriculaDashboardComponent)
+      },
+      {
+        path: 'expediente/retiro',
+        loadComponent: () => import('./routes/expediente/expediente-withdrawal/expediente-withdrawal.component')
+          .then(c => c.ExpedienteWithdrawalComponent)
+      },
+      {
+        path: '403',
+        loadComponent: () => import('./routes/sessions/403.component')
+          .then(c => c.Error403Component)
+      },
+      // ... otras rutas similares
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: 'login',
+        loadComponent: () => import('./routes/sessions/login/login.component')
+          .then(c => c.LoginComponent)
+      },
+      // ... otras rutas de auth
+    ],
+  },
+  { path: '**', redirectTo: 'auth/login' },
+];
+/*import { Routes } from '@angular/router';
+import { authGuard } from '@core';
+import { AdminLayoutComponent } from '@theme/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from '@theme/auth-layout/auth-layout.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { Error403Component } from './routes/sessions/403.component';
 import { Error404Component } from './routes/sessions/404.component';
@@ -40,4 +100,4 @@ export const routes: Routes = [
   },
  // { path: '**', redirectTo: 'dashboard' },
   { path: '**', redirectTo: 'auth/login' },
-];
+];*/

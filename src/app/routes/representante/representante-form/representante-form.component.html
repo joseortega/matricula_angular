@@ -40,6 +40,19 @@
 
                 <!--columna 2-->
                 <!--<div class="col-sm-6">-->
+                <mat-form-field>
+                  <mat-label>Seleccione la Nacionalidad</mat-label>
+                  <mat-select formControlName="pais_nacionalidad" required [compareWith]="compareObjects">
+                    @for (pais_nacionalidad of pais_nacionalidades$ | async; track pais_nacionalidad) {
+                      <mat-option [value]="pais_nacionalidad">{{pais_nacionalidad.nacionalidad}}</mat-option>
+                    }
+                  </mat-select>
+                  @if(representanteForm.get('nacionalidad')?.hasError('required')){
+                    <mat-error>
+                      Nacionalidad es requerida
+                    </mat-error>
+                  }
+                </mat-form-field>
                     <mat-form-field>
                       <mat-label>Teléfono</mat-label>
                       <input matInput formControlName="telefono">

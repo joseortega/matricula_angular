@@ -7,8 +7,8 @@ export class EstudianteRepresentante {
     estudiante: Estudiante;
     representante: Representante;
     parentesco: Parentesco;
-    es_principal: boolean | undefined;
-    
+    principal: boolean | undefined;
+
     constructor(){
         this.estudiante = new Estudiante();
         this.representante = new Representante();

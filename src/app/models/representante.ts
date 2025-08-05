@@ -1,3 +1,5 @@
+import {Pais} from "./pais";
+
 export class Representante {
     id: number | undefined;
     identificacion: string | undefined;
@@ -8,7 +10,10 @@ export class Representante {
     direccion: string | undefined;
     telefono: string | undefined;
     correo: string | undefined;
+    pais_nacionalidad: Pais;
 
     constructor(){
+      this.pais_nacionalidad = new Pais();
+      this.fecha_nacimiento = null;
     }
 }

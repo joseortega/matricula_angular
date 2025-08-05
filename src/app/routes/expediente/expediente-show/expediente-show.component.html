@@ -1,4 +1,4 @@
-<mat-card class="whit-icon-edit-card" [class.disabled]="expediente.esta_retirado">
+<mat-card class="whit-icon-edit-card" [class.disabled]="expediente.retirado">
   <button mat-icon-button aria-label="Editar" class="edit-button" (click)="editExpediente()">
     <mat-icon>edit</mat-icon>
   </button>
@@ -13,7 +13,7 @@
             <span matListItemLine>Fecha de Ingreso</span>
           </mat-list-item>
           <mat-list-item>
-            @if(expediente.esta_completo){
+            @if(expediente.completo){
               <span matListItemTitle>Expediente completo</span>
             }@else{
               <span matListItemTitle>Falta documentación</span>
@@ -25,7 +25,7 @@
       <div class="col-sm-6">
         <mat-list role="list">
           <mat-list-item>
-            @if(!expediente.esta_retirado){
+            @if(!expediente.retirado){
               <div matListItemTitle>No se ha retirado</div>
             }@else{
               <div matListItemTitle>Si, se ha retirado</div>
@@ -54,7 +54,7 @@
 
   </mat-card-content>
 </mat-card>
-@if(!expediente.esta_retirado){
+@if(!expediente.retirado){
   <div class="d-flex justify-content-end">
     <button mat-raised-button (click)="withdrawExpediente()">Retirar Expediente</button>
   </div>

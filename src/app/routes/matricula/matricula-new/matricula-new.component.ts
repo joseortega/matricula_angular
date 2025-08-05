@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, signal} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, signal} from '@angular/core';
 import { PageHeaderComponent } from '@shared';
 import { Estudiante } from 'app/models/estudiante';
 import { EstudianteSearchComponent } from 'app/routes/estudiante/estudiante-search/estudiante-search.component';
@@ -39,6 +39,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class MatriculaNewComponent implements OnInit {
   @Input() matricula: Matricula = new Matricula();
+  @Output() matriculaChangueEvent = new EventEmitter<Matricula>();
   public isEditMode: boolean = false;
 
   constructor(
@@ -68,6 +69,7 @@ export class MatriculaNewComponent implements OnInit {
     this.matriculaService.create(this.matricula).subscribe({
       next: data => {
         this.matricula = data;
+        this.matriculaChangueEvent.emit(this.matricula);
         this.router.navigate([`matricula/dashboard/edit/${this.matricula.id}`]);
         this.toastrService.success('El elemento fue creado correctamente!', 'Éxito!', {"closeButton": true});
         this.isEditMode = false;
@@ -79,6 +81,7 @@ export class MatriculaNewComponent implements OnInit {
     this.matriculaService.update(this.matricula.id, this.matricula).subscribe({
       next: data => {
         this.matricula = data;
+        this.matriculaChangueEvent.emit(this.matricula);
         this.toastrService.success('El elemento fue actualizado correctamente!', 'Éxito!', {"closeButton": true});
         this.isEditMode = false;
       }

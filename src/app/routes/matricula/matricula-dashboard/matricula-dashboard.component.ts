@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import {Component, Input, OnInit, signal} from '@angular/core';
 import { PageHeaderComponent } from '@shared';
 import { Estudiante } from 'app/models/estudiante';
 import { EstudianteSearchComponent } from 'app/routes/estudiante/estudiante-search/estudiante-search.component';
@@ -9,24 +9,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatriculaFormComponent } from '../matricula-form/matricula-form.component';
 import { Matricula } from 'app/models/matricula';
 import { MatriculaService } from 'app/services/matricula.service';
-import { ActivatedRoute, Router  } from '@angular/router';
+import { ActivatedRoute  } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { MatriculaShowComponent } from '../matricula-show/matricula-show.component';
 import { EstudianteRepresentantePrincipalComponent } from "../../estudiante-representante/estudiante-representante-principal/estudiante-representante-principal.component";
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatDivider} from "@angular/material/divider";
 import {EstudianteRepresentanteService} from "../../../services/estudiante-representante.service";
 import {MatriculaDocComponent} from "../matricula-doc/matricula-doc.component";
 import {MatriculaNewComponent} from "../matricula-new/matricula-new.component";
 import {EstudianteRepresentante} from "../../../models/EstudianteRepresentante";
 import {ExpedienteNewComponent} from "../../expediente/expediente-new/expediente-new.component";
 import {ExpedienteService} from "../../../services/expediente.service";
-import {ExpedienteShowComponent} from "../../expediente/expediente-show/expediente-show.component";
-import {MatriculaAdminComponent} from "../matricula-admin/matricula-admin.component";
 
 
 @Component({
@@ -41,16 +36,15 @@ import {MatriculaAdminComponent} from "../matricula-admin/matricula-admin.compon
     MatIconModule,
     MatCardModule,
     MatTooltipModule,
-    MatriculaFormComponent,
-    MatriculaShowComponent,
     EstudianteRepresentantePrincipalComponent,
-    MatExpansionModule, MatDivider, MatriculaDocComponent, MatriculaNewComponent, ExpedienteNewComponent, ExpedienteShowComponent, MatriculaAdminComponent,
+    MatExpansionModule, MatriculaDocComponent, MatriculaNewComponent, ExpedienteNewComponent,
   ],
   templateUrl: './matricula-dashboard.component.html',
   styleUrl: './matricula-dashboard.component.css'
 })
 export class MatriculaDashboardComponent implements OnInit {
   public matricula: Matricula = new Matricula();
+  //@Input() matricula: Matricula= new Matricula();
   public existeEstudianteRepresentaPrincipal: boolean = false;
   public existeExpediente: boolean = true;
 
@@ -61,7 +55,6 @@ export class MatriculaDashboardComponent implements OnInit {
               private expedienteService: ExpedienteService,
               private toastrService: ToastrService,
               private route: ActivatedRoute,
-              private router: Router,
               public dialog: MatDialog){
   }
 
@@ -72,6 +65,10 @@ export class MatriculaDashboardComponent implements OnInit {
       this.getMatricula(matriculaId);
       this.existeEstudianteRepresentaPrincipal=true;
     }
+  }
+
+  onMatriculaChangueEvent(matricula: Matricula) {
+    this.matricula = matricula;
   }
 
   getMatricula(matriculaId: number): void{

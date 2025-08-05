@@ -75,22 +75,23 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Datos de Matrícula">
-    <ng-template matTabContent>
-      <div class="tab-content">
-        <app-matricula-new
-          [matricula]="matricula">
-        </app-matricula-new>
-      </div>
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Revisión de documentación">
+  <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Revisión de Expediente">
     <ng-template matTabContent>
       <div class="tab-content">
         <app-expediente-new
           [estudiante]="matricula.estudiante">
         </app-expediente-new>
+      </div>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab [disabled]='!existeEstudianteRepresentaPrincipal' label="Datos de Matrícula">
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <app-matricula-new
+          [matricula]="matricula"
+          (matriculaChangueEvent)="onMatriculaChangueEvent($event)">
+        </app-matricula-new>
       </div>
     </ng-template>
   </mat-tab>

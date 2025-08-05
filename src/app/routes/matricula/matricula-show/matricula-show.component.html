@@ -7,8 +7,8 @@
       <div class="col-sm-6">
         <mat-list>
           <mat-list-item>
-            <span matListItemTitle>{{matricula.fecha}}</span>
-            <span matListItemLine>Fecha Matricula</span>
+            <span matListItemTitle>{{matricula.fecha_inscripcion}}</span>
+            <span matListItemLine>Fecha de Incscripción</span>
           </mat-list-item>
           <mat-list-item>
             <span matListItemTitle>{{matricula.periodo_lectivo.descripcion}}</span>
@@ -26,29 +26,41 @@
             <span matListItemTitle>{{matricula.grado_escolar.descripcion}}</span>
             <span matListItemLine>Grado Escolar</span>
           </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.paralelo.descripcion}}</span>
+            <span matListItemLine>Paralelo</span>
+          </mat-list-item>
         </mat-list>
       </div>
       <div class="col-sm-6">
         <mat-list>
           <mat-list-item>
-            <span matListItemTitle>{{matricula.paralelo.descripcion}}</span>
-            <span matListItemLine>Paralelo</span>
-          </mat-list-item>
-          <mat-list-item>
-            <span matListItemTitle>{{matricula.estado}}</span>
-            <span matListItemLine>Estado de Matrícula</span>
+            <span matListItemTitle>{{matricula.estado_matricula.descripcion}}</span>
+            <span matListItemLine>Estado actual de la matricula</span>
           </mat-list-item>
           <mat-list-item>
             <span matListItemTitle>{{matricula.fecha_cambio_estado}}</span>
             <span matListItemLine>Fecha Cambio de Estado</span>
           </mat-list-item>
           <mat-list-item>
-            @if(matricula.inscrito_en_sistema_publico){
+            @if(matricula.inscrito_sistema_publico){
               <span matListItemTitle>SI</span>
             } @else {
               <span matListItemTitle>NO</span>
             }
             <span matListItemLine>Inscrito en el CAS</span>
+          </mat-list-item>
+          <mat-list-item>
+            @if(matricula.legalizada){
+              <span matListItemTitle>SI</span>
+            } @else {
+              <span matListItemTitle>NO</span>
+            }
+            <span matListItemLine>La matricula está legalizada</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>{{matricula.fecha_legalizacion}}</span>
+            <span matListItemLine>Fecha de Legalización de la matricula</span>
           </mat-list-item>
           <mat-list-item>
             @if(matricula.observacion){

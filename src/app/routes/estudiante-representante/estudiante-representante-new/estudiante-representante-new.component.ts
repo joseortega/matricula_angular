@@ -17,7 +17,7 @@ export class EstudianteRepresentanteNewComponent implements OnInit{
     @Input() estudianteRepresentante: EstudianteRepresentante = new EstudianteRepresentante();
     @Output() newEstudianteRepresentanteEvent = new EventEmitter<EstudianteRepresentante>();
     @Input() isInputRepresentanteDisabled: boolean = false;
-    @Input() isEsPrincipal: boolean = false;
+    @Input() isPrincipal: boolean = false;
 
 
     constructor(private estudianteRepresentanteService: EstudianteRepresentanteService,
@@ -30,7 +30,7 @@ export class EstudianteRepresentanteNewComponent implements OnInit{
     onSubmitted(estudianteRepresentante: EstudianteRepresentante){
         this.estudianteRepresentante = estudianteRepresentante;
         if(!this.estudianteRepresentante.id){
-            this.estudianteRepresentante.es_principal = this.isEsPrincipal;
+            this.estudianteRepresentante.principal = this.isPrincipal;
             this.create();
         }else{
             this.update();

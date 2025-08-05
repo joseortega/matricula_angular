@@ -157,8 +157,8 @@ export class MatriculaService {
     if (matriculaFilter.grado_escolar && matriculaFilter.grado_escolar.id !== undefined) {
       params = params.append('grado_escolar', matriculaFilter.grado_escolar.id.toString());
     }
-    if (matriculaFilter.estado) {
-      params = params.append('estado', matriculaFilter.estado);
+    if (matriculaFilter.estado_matricula && matriculaFilter.estado_matricula.id !== undefined) {
+      params = params.append('estado_matricula', matriculaFilter.estado_matricula.id.toString());
     }
     if (matriculaFilter.paralelo && matriculaFilter.paralelo.id !== undefined) {
       params = params.append('paralelo', matriculaFilter.paralelo.id.toString());

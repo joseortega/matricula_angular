@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: '',
+  baseUrl: 'http://api.matricula.localhost/api',
   useHash: false,
 };

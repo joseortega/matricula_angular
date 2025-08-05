@@ -1,5 +1,5 @@
 import {AsyncPipe, CommonModule, DatePipe} from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,10 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from "@angular/material-moment-adapter";
 import {MY_DATE_FORMATS} from "../../../my-date-formats";
 import {SEXO} from "../../../models/sexo";
+import {Pais} from "../../../models/pais";
+import {notNullValidator} from "../../../validators/not-null-validator";
+import {Observable} from "rxjs";
+import {PaisService} from "../../../services/pais.service";
 
 @Component({
   selector: 'app-representante-form',
@@ -39,7 +43,9 @@ import {SEXO} from "../../../models/sexo";
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
 })
-export class RepresentanteFormComponent implements OnChanges {
+export class RepresentanteFormComponent implements OnInit, OnChanges {
+
+    public pais_nacionalidades$: Observable<Pais[]> = new Observable<Pais[]>;
 
     @Input() representante: Representante= new Representante();
     @Output() submittedEvent = new EventEmitter<Representante>();
@@ -50,16 +56,21 @@ export class RepresentanteFormComponent implements OnChanges {
        apellidos: new FormControl<string>('', Validators.required),
        nombres: new FormControl<string>('', Validators.required),
        sexo: new FormControl<any>('', Validators.required),
-       fecha_nacimiento:  new FormControl<Date | string | null>(null),
+      fecha_nacimiento:  new FormControl<Date | string | null>(null,  Validators.required),
+       pais_nacionalidad: new FormControl<Pais>(new Pais(), [Validators.required, notNullValidator()]),
        direccion: new FormControl<string>(''),
        telefono: new FormControl<string>(''),
        correo: new FormControl<string>(''),
     });
 
-    constructor(private datePipe: DatePipe){
+    constructor(private datePipe: DatePipe, private  paisService: PaisService,){
     }
 
-    submit(): void{
+    ngOnInit() {
+      this.pais_nacionalidades$ = this.paisService.getList();
+    }
+
+  submit(): void{
         this.representante = Object.assign(this.representante, this.representanteForm.value);
         this.representante.fecha_nacimiento = this.datePipe.transform( this.representanteForm.get('fecha_nacimiento')?.value, 'yyyy-MM-dd');
         this.submittedEvent.emit( this.representante);
@@ -71,6 +82,10 @@ export class RepresentanteFormComponent implements OnChanges {
                 this.representanteForm.patchValue(this.representante);
             }
         }
+    }
+
+    compareObjects(option1: any, option2: any): boolean {
+      return option1 && option2 && option1.id === option2.id;
     }
 
 }

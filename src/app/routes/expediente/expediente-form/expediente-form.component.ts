@@ -42,7 +42,7 @@ export class ExpedienteFormComponent implements OnChanges{
 
   expedienteForm = new FormGroup({
     requisitos: new FormControl<Requisito[]>([]),
-    esta_completo: new FormControl<boolean>(false),
+    completo: new FormControl<boolean>(false),
     observacion: new FormControl<string>(''),
   });
 
@@ -58,7 +58,7 @@ export class ExpedienteFormComponent implements OnChanges{
       if (changes.expediente.currentValue) {
         this.expedienteForm.patchValue({
           requisitos: this.expediente.requisitos,
-          esta_completo: this.expediente.esta_completo,
+          completo: this.expediente.completo,
           observacion: this.expediente.observacion || '',
         });
         //this.expedienteForm.disable();

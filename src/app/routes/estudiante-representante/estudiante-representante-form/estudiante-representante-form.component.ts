@@ -19,7 +19,6 @@ import { Parentesco } from '../../../models/parentesco';
 import { notNullValidator } from '../../../validators/not-null-validator';
 import { MatSelectModule } from '@angular/material/select';
 import { ParentescoService } from '../../../services/parentesco.service';
-import {Estudiante} from "../../../models/estudiante";
 
 @Component({
   selector: 'app-estudiante-representante-form',

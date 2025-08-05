@@ -47,10 +47,10 @@
         <div class="col-sm-4">
           <mat-form-field>
             <mat-label>Estado</mat-label>
-            <mat-select formControlName="estado">
+            <mat-select formControlName="estado_matricula">
               <mat-option>--</mat-option>
-              @for (estado of estadoList; track estado) {
-                <mat-option [value]="estado">{{estado}}</mat-option>
+              @for (estado_matricula of estado_matriculas$ | async; track estado_matricula) {
+                <mat-option [value]="estado_matricula">{{estado_matricula.descripcion}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -100,13 +100,13 @@
 
     <ng-container matColumnDef="estado">
       <th mat-header-cell *matHeaderCellDef>Estado Matrícula</th>
-      <td mat-cell *matCellDef="let matricula">{{matricula.estado}}</td>
+      <td mat-cell *matCellDef="let matricula">{{matricula.estado_matricula.descripcion}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="inscrito_en_sistema_publico">
+    <ng-container matColumnDef="inscrito_sistema_publico">
       <th mat-header-cell *matHeaderCellDef>Inscrito en el CAS?</th>
       <td mat-cell *matCellDef="let matricula">
-        @if (matricula.inscrito_en_sistema_publico) {
+        @if (matricula.inscrito_sistema_publico) {
           <mat-icon matChipAvatar>check_circle</mat-icon>
         } @else {
           <mat-icon matChipAvatar>cancel</mat-icon>

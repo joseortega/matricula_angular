@@ -21,17 +21,17 @@ import { Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatriculaFilter } from 'app/filters/matricula-filter';
-import {MatChip, MatChipAvatar, MatChipSet} from "@angular/material/chips";
-import {Paralelo} from "../../../models/paralelo";
-import {ParaleloService} from "../../../services/paralelo.service";
-import {MATRICULA_ESTADOS} from "../../../models/matricula-estados";
+import { MatChipAvatar } from "@angular/material/chips";
+import { Paralelo } from "../../../models/paralelo";
+import { ParaleloService } from "../../../services/paralelo.service";
+import { EstadoMatricula } from "../../../models/estadoMatricula";
+import { EstadoMatriculaService } from "../../../services/estado-matricula.service";
 
 @Component({
   selector: 'app-matricula-list',
   standalone: true,
   imports: [CommonModule,
     FormsModule,
-    RouterOutlet,
     RouterModule,
     PageHeaderComponent,
     MatTableModule,
@@ -46,7 +46,7 @@ import {MATRICULA_ESTADOS} from "../../../models/matricula-estados";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule, MatChip, MatChipAvatar, MatChipSet
+    MatIconModule, MatChipAvatar,
   ],
   templateUrl: './matricula-list.component.html',
   styleUrl: './matricula-list.component.css'
@@ -59,12 +59,12 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public matriculas: Matricula[] = [];
 
     //filters
-    matriculaFilter: MatriculaFilter = {grado_escolar: new GradoEscolar(),periodo_lectivo: new PeriodoLectivo(), paralelo: new Paralelo(), estado: '', search_term: ''};
+    matriculaFilter: MatriculaFilter = {grado_escolar: new GradoEscolar(),periodo_lectivo: new PeriodoLectivo(), paralelo: new Paralelo(), estado_matricula: new EstadoMatricula(), search_term: ''};
     matriculaFilterForm = new FormGroup({
         periodo_lectivo: new FormControl<PeriodoLectivo>(new PeriodoLectivo()),
         grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar()),
         paralelo: new FormControl<Paralelo>(new Paralelo()),
-        estado: new FormControl<string>(''),
+        estado_matricula: new FormControl<EstadoMatricula>(new EstadoMatricula()),
         search_term: new FormControl('')
     });
 
@@ -72,7 +72,7 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public periodoLectivoList$: Observable<PeriodoLectivo[]>=new Observable<PeriodoLectivo[]>;
     public gradoEscolarList$: Observable<GradoEscolar[]>=new Observable<GradoEscolar[]>;
     public paraleloList$: Observable<Paralelo[]>=new Observable<Paralelo[]>;
-    public estadoList: string[] = [];
+    public estado_matriculas$: Observable<EstadoMatricula[]> = new Observable<EstadoMatricula[]>();
 
     public dataSource = new MatTableDataSource<Matricula>();
     @ViewChild(MatPaginator) private paginator!: MatPaginator;
@@ -84,13 +84,14 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
       'nombres',
       "grado_escolar",
       "estado",
-      "inscrito_en_sistema_publico",
+      "inscrito_sistema_publico",
     ];
 
     constructor(private matriculaService: MatriculaService,
                  private periodoLectivoService: PeriodoLectivoService,
                  private gradoEscolarService: GradoEscolarService,
                  private paraleloService: ParaleloService,
+                 private estadoMatriculaService: EstadoMatriculaService,
                  private route: ActivatedRoute,
                  private router: Router){
     }
@@ -104,7 +105,7 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
         this.gradoEscolarList$ = this.gradoEscolarService.getList();
         this.periodoLectivoList$ = this.periodoLectivoService.getList();
         this.paraleloList$ = this.paraleloService.getList();
-        this.estadoList = Object.values(MATRICULA_ESTADOS);
+        this.estado_matriculas$ = this.estadoMatriculaService.getList();
 
         //matricula list
         this.getMatriculaList();
@@ -163,7 +164,7 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
             periodo_lectivo: formValues.periodo_lectivo,
             grado_escolar: formValues.grado_escolar,
             paralelo: formValues.paralelo,
-            estado: formValues.estado,
+            estado_matricula: formValues.estado_matricula,
             search_term: formValues.search_term
         };
         //reseteamos la pagina a 0

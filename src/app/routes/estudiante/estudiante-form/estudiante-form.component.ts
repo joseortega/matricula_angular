@@ -12,34 +12,38 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { Estudiante } from 'app/models/estudiante';
-import { Nacionalidad } from 'app/models/nacionalidad';
 import { MY_DATE_FORMATS } from 'app/my-date-formats';
-import { NacionalidadService } from 'app/services/nacionalidad.service';
-import { Observable } from 'rxjs';
+import {Observable, startWith, switchMap} from 'rxjs';
 import { SEXO } from 'app/models/sexo';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { UniformeTalla } from 'app/models/uniforme_talla';
 import { UniformeTallaService } from 'app/services/uniforme-talla.service';
 import { notNullValidator } from 'app/validators/not-null-validator';
+import {Pais} from "../../../models/pais";
+import {PaisService} from "../../../services/pais.service";
+import {Representante} from "../../../models/representante";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 
 @Component({
   selector: 'app-estudiante-form',
   standalone: true,
   imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        AsyncPipe,
-        MatCardModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatRadioModule,
-        MatIconModule,
-        MatSlideToggleModule,
-        ],
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    AsyncPipe,
+    MatCardModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatRadioModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+  ],
   templateUrl: './estudiante-form.component.html',
   styleUrl: './estudiante-form.component.css',
   providers: [
@@ -52,12 +56,12 @@ import { notNullValidator } from 'app/validators/not-null-validator';
 
 export class EstudianteFormComponent implements OnInit, OnChanges{
 
-    public nacionalidades$: Observable<Nacionalidad[]> = new Observable<Nacionalidad[]>;
     public uniformeTallas$: Observable<UniformeTalla[]> = new Observable<UniformeTalla[]>;
     public sexos: string[]=[SEXO.hombre, SEXO.mujer];
 
     @Input() estudiante: Estudiante= new Estudiante();
     @Output() submittedEvent = new EventEmitter<Estudiante>();
+    filteredPaisNacionalidades: Observable<Pais[]> | undefined = new Observable<Pais[]>;
 
     estudianteForm = new FormGroup({
        identificacion: new FormControl<string>('', Validators.required),
@@ -65,29 +69,38 @@ export class EstudianteFormComponent implements OnInit, OnChanges{
        nombres: new FormControl<string>('', Validators.required),
        sexo: new FormControl<any>('', Validators.required),
        fecha_nacimiento:  new FormControl<Date | string | null>(null,  Validators.required),
-       nacionalidad: new FormControl<Nacionalidad>(new Nacionalidad(), [Validators.required, notNullValidator()]),
+       pais_nacionalidad: new FormControl<Pais>(new Pais(), [Validators.required, notNullValidator()]),
        uniforme_talla: new FormControl<UniformeTalla | null>(null),
        direccion: new FormControl<string>(''),
        telefono: new FormControl<string>(''),
        correo: new FormControl<string>(''),
        tiene_discapacidad: new FormControl<boolean>(false),
-
     });
 
-    constructor(private nacionalidadService: NacionalidadService,
+    constructor(private paisService: PaisService,
                 private uniformeTallaService: UniformeTallaService,
                 private datePipe: DatePipe,
                 ){
     }
     ngOnInit(): void {
-        this.nacionalidades$ = this.nacionalidadService.getList();
-        this.uniformeTallas$ = this.uniformeTallaService.getList();
+        this.filteredPaisNacionalidades = this.estudianteForm.get('pais_nacionalidad')?.valueChanges.pipe(
+          startWith(''),
+          switchMap(value => this.paisService.getSearch(value as string || '')),
+        );
+       this.uniformeTallas$ = this.uniformeTallaService.getList();
+    }
+
+    displayFn(pais_nacionalidad: Pais): any {
+      return pais_nacionalidad && pais_nacionalidad.id ? pais_nacionalidad.nombre_comun+' / '+pais_nacionalidad.nacionalidad : '';
+    }
+
+    clearSelectPaisNacionalidad(): void{
+      this.estudianteForm.get('pais_nacionalidad')?.setValue(null);
     }
 
     submit(): void{
         this.estudiante = Object.assign(this.estudiante, this.estudianteForm.value);
         this.estudiante.fecha_nacimiento = this.datePipe.transform( this.estudianteForm.get('fecha_nacimiento')?.value, 'yyyy-MM-dd');
-
         this.submittedEvent.emit( this.estudiante);
     }
 

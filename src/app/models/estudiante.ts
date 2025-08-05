@@ -1,6 +1,6 @@
-import { Nacionalidad } from "./nacionalidad";
 import { UniformeTalla } from "./uniforme_talla";
 import { Expediente } from "./expediente";
+import {Pais} from "./pais";
 
 export class Estudiante {
     id: number | undefined;
@@ -14,10 +14,10 @@ export class Estudiante {
     correo: string | undefined;
     tiene_discapacidad: boolean | undefined;
     uniforme_talla: UniformeTalla | undefined | null;
-    nacionalidad: Nacionalidad;
+    pais_nacionalidad?: Pais;
     expediente: Expediente | undefined;
     constructor(){
-        this.nacionalidad = new Nacionalidad();
+        this.pais_nacionalidad = new Pais();
         this.fecha_nacimiento = null;
     }
     /**

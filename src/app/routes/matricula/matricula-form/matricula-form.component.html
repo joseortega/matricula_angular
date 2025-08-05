@@ -2,61 +2,52 @@
     <mat-card-content>
         <form class="form-field-full" [formGroup]="matriculaForm" (ngSubmit)="submit()">
             <div class="row">
-                <div class="col-sm-6">
-                    <mat-form-field>
-                        <mat-label>Fecha de Matricula</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="fecha">
-                        <mat-hint>YYYY-MM-DD</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-6">
-                    <mat-form-field>
-                        <mat-label>Seleccione la Modalidad</mat-label>
-                        <mat-select formControlName="modalidad" [compareWith]="compareObjects">
-                          @for (modalidad of modalidades$ | async; track modalidad) {
-                            <mat-option [value]="modalidad">{{modalidad.descripcion}}</mat-option>
-                          }
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+              <div class="col-sm-6">
+                  <mat-form-field>
+                      <mat-label>Seleccione la Modalidad</mat-label>
+                      <mat-select formControlName="modalidad" [compareWith]="compareObjects">
+                        @for (modalidad of modalidades$ | async; track modalidad) {
+                          <mat-option [value]="modalidad">{{modalidad.descripcion}}</mat-option>
+                        }
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Seleccione la Jornada</mat-label>
+                  <mat-select formControlName="jornada" [compareWith]="compareObjects">
+                    @for (jornada of jornadas$ | async; track jornada) {
+                      <mat-option [value]="jornada">{{jornada.descripcion}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-6">
-                    <mat-form-field>
-                        <mat-label>Seleccione el Periodo lectivo</mat-label>
-                        <mat-select formControlName="periodo_lectivo" [compareWith]="compareObjects">
-                          @for (periodo_lectivo of periodo_lectivos$ | async; track periodo_lectivo) {
-                            <mat-option [value]="periodo_lectivo">{{periodo_lectivo.descripcion}}</mat-option>
-                          }
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-6">
-                    <mat-form-field>
-                        <mat-label>Seleccione la Jornada</mat-label>
-                        <mat-select formControlName="jornada" [compareWith]="compareObjects">
-                          @for (jornada of jornadas$ | async; track jornada) {
-                            <mat-option [value]="jornada">{{jornada.descripcion}}</mat-option>
-                          }
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Seleccione el Periodo lectivo</mat-label>
+                  <mat-select formControlName="periodo_lectivo" [compareWith]="compareObjects">
+                    @for (periodo_lectivo of periodo_lectivos$ | async; track periodo_lectivo) {
+                      <mat-option [value]="periodo_lectivo">{{periodo_lectivo.descripcion}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Seleccione el Grado Escolar</mat-label>
+                  <mat-select formControlName="grado_escolar" [compareWith]="compareObjects">
+                    @for (grado_escolar of grado_escolares$  | async; track grado_escolar) {
+                      <mat-option [value]="grado_escolar">{{grado_escolar.descripcion}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-6">
-                    <mat-form-field>
-                        <mat-label>Seleccione el Grado Escolar</mat-label>
-                        <mat-select formControlName="grado_escolar" [compareWith]="compareObjects">
-                          @for (grado_escolar of grado_escolares$  | async; track grado_escolar) {
-                            <mat-option [value]="grado_escolar">{{grado_escolar.descripcion}}</mat-option>
-                          }
-                        </mat-select>
-                    </mat-form-field>
-                </div>
                 <div class="col-sm-6">
                     <mat-form-field>
                         <mat-label>Seleccione el Paralelo</mat-label>
@@ -67,27 +58,18 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-            </div>
 
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Estado</mat-label>
-                <mat-select formControlName="estado" required>
-                  @for (estado of estados; track estado) {
-                    <mat-option [value]="estado">{{estado}}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Seleccione el Estado de Matricula</mat-label>
+                  <mat-select formControlName="estado_matricula" [compareWith]="compareObjects">
+                    @for (estado_matricula of estado_matricula$  | async; track estado_matricula) {
+                      <mat-option [value]="estado_matricula">{{estado_matricula.descripcion}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-
-            <div class="col-sm-6">
-              Consta en el sistema CAS:
-              <mat-slide-toggle formControlName="inscrito_en_sistema_publico">
-                Marque esta casilla si el estudiante está inscrito en el sistema CAS, caso contrario desmarque.
-              </mat-slide-toggle>
-            </div>
-          </div>
 
           <div class="row">
             <div class="col-sm-6">
@@ -95,6 +77,22 @@
                 <mat-label>Observación</mat-label>
                 <textarea matInput placeholder="Escriba cualquier observación, Ej. Falta doc" formControlName="observacion"></textarea>
               </mat-form-field>
+            </div>
+
+            <div class="col-sm-6">
+              Consta en el sistema CAS?:
+              <mat-slide-toggle formControlName="inscrito_sistema_publico">
+                Marque esta casilla si el estudiante está inscrito en el sistema CAS, caso contrario desmarque.
+              </mat-slide-toggle>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              Matricula Legalizada?:
+              <mat-slide-toggle formControlName="legalizada">
+                Marque esta casilla si la matricula ha sido legalizada (cumple con todos los requisitos).
+              </mat-slide-toggle>
             </div>
           </div>
 

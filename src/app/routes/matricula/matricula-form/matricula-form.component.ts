@@ -27,7 +27,8 @@ import { notNullValidator } from 'app/validators/not-null-validator';
 import {
   MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
-import { MATRICULA_ESTADOS } from 'app/models/matricula-estados';
+import {EstadoMatricula} from "../../../models/estadoMatricula";
+import {EstadoMatriculaService} from "../../../services/estado-matricula.service";
 
 @Component({
   selector: 'app-matricula-form',
@@ -62,20 +63,20 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
   public grado_escolares$: Observable<GradoEscolar[]> = new Observable<GradoEscolar[]>;
   public jornadas$: Observable<Jornada[]> = new Observable<Jornada[]>;
   public paralelos$: Observable<Paralelo[]> = new Observable<Paralelo[]>;
-  public estados: string[] = [];
+  public estado_matricula$: Observable<EstadoMatricula[]> = new Observable<EstadoMatricula[]>
 
   @Input() matricula: Matricula= new Matricula();
   @Output() submittedEvent = new EventEmitter<Matricula>();
 
   matriculaForm = new FormGroup({
-    fecha:  new FormControl<Date | string>({value: new Date(), disabled: true}, Validators.required),
     modalidad: new FormControl<Modalidad>(new Modalidad(), [Validators.required, notNullValidator()]),
     periodo_lectivo: new FormControl<PeriodoLectivo>(new PeriodoLectivo(), [Validators.required, notNullValidator()]),
     grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar(), [Validators.required, notNullValidator()]),
     jornada: new FormControl<Jornada>(new Jornada(), [Validators.required, notNullValidator()]),
     paralelo: new FormControl<Paralelo>(new Paralelo(), [Validators.required, notNullValidator()]),
-    inscrito_en_sistema_publico: new FormControl<boolean>(true, Validators.required),
-    estado: new FormControl<string>('', Validators.required),
+    inscrito_sistema_publico: new FormControl<boolean>(true, Validators.required),
+    legalizada: new FormControl<boolean>(false, Validators.required),
+    estado_matricula: new FormControl<EstadoMatricula>(new EstadoMatricula(), [Validators.required, notNullValidator()]),
     observacion: new FormControl<string>(''),
   });
 
@@ -85,7 +86,7 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
     private gradoEscolarService: GradoEscolarService,
     private jornadaService: JornadaService,
     private paraleloService: ParaleloService,
-    private datePipe: DatePipe,
+    private estadoMatriculaService: EstadoMatriculaService,
   ){
   }
   ngOnInit(): void {
@@ -95,30 +96,19 @@ export class MatriculaFormComponent implements OnInit, OnChanges {
     this.grado_escolares$ = this.gradoEscolarService.getList();
     this.jornadas$ = this.jornadaService.getList();
     this.paralelos$ = this.paraleloService.getList();
-    this.estados = Object.values(MATRICULA_ESTADOS);
+    this.estado_matricula$ = this.estadoMatriculaService.getList();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['matricula']) {
       if (changes.matricula.currentValue) {
-        this.matriculaForm.setValue({
-          fecha: this.matricula.fecha,
-          modalidad: this.matricula.modalidad,
-          periodo_lectivo: this.matricula.periodo_lectivo,
-          grado_escolar: this.matricula.grado_escolar,
-          jornada: this.matricula.jornada,
-          paralelo: this.matricula.paralelo,
-          inscrito_en_sistema_publico: this.matricula.inscrito_en_sistema_publico,
-          estado: this.matricula.estado,
-          observacion: this.matricula.observacion || ''
-        });
+        this.matriculaForm.patchValue(this.matricula);
       }
     }
   }
 
   submit(){
     this.matricula = Object.assign(this.matricula, this.matriculaForm.value);
-    this.matricula.fecha = this.datePipe.transform( this.matriculaForm.get('fecha')?.value, 'yyyy-MM-dd');
     this.submittedEvent.emit( this.matricula);
   }
 

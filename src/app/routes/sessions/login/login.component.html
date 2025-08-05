@@ -8,12 +8,12 @@
       <form class="form-field-full" [formGroup]="loginForm">
         <mat-form-field appearance="outline">
           <mat-label>{{'username' | translate}}:</mat-label>
-          <input matInput placeholder="admin" formControlName="username" required>
+          <input matInput placeholder="" formControlName="username" required>
           @if (username.invalid) {
             <mat-error>
               @if (username.errors?.required) {
                 <span>{{'please_enter' | translate}}
-                  <strong>admin</strong>
+                  <strong>Nombre de Usuario</strong>
                 </span>
               }
               @if (username.errors?.remote) {
@@ -25,13 +25,13 @@
 
         <mat-form-field appearance="outline">
           <mat-label>{{'password' | translate}}:</mat-label>
-          <input matInput placeholder="pass_1234" type="password"
+          <input matInput placeholder="" type="password"
             formControlName="password" required>
           @if (password.invalid) {
             <mat-error>
               @if (password.errors?.required) {
                 <span>{{'please_enter' | translate}}
-                  <strong>pass_1234</strong>
+                  <strong>la contraseña</strong>
                 </span>
               }
               @if (password.errors?.remote) {
@@ -45,11 +45,6 @@
 
         <button class="w-full m-y-16" mat-flat-button [disabled]="!!loginForm.invalid"
           [loading]="isSubmitting" (click)="login()">{{'login' | translate}}</button>
-
-        <div>
-          <span>{{'have_no_account' | translate}}? </span>
-          <a routerLink="/auth/register">{{'create_one_account' | translate}}</a>
-        </div>
       </form>
     </mat-card-content>
   </mat-card>
