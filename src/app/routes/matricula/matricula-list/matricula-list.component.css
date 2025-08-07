@@ -2,10 +2,6 @@ button {
   margin-right: 8px;
 }
 
-.demo-table {
-  width: 100%;
-}
-
 .mat-mdc-row .mat-mdc-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
@@ -16,10 +12,37 @@ button {
   border-color: currentColor;
 }
 
-.demo-row-is-clicked {
-  font-weight: bold;
-}
 /*search button*/
 .full-button{
     width:  100%
+}
+
+/*css para la tabla**/
+.table-wrapper {
+  width: 100%;
+}
+
+/* En PC (pantallas grandes): tabla ocupa el 100% */
+@media (min-width: 768px) {
+  .table-wrapper {
+    overflow-x: visible;
+  }
+
+  table {
+    width: 100%;
+    min-width: 100%;
+    white-space: normal;
+  }
+}
+
+/* En móviles (pantallas pequeñas): tabla hace scroll */
+@media (max-width: 767px) {
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 700px;
+    white-space: nowrap;
+  }
 }

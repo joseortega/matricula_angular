@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://api.matricula.localhost/api',
+  baseUrl: 'https://api.heroesdelcenepa.com/api',
   useHash: false,
 };
+  
