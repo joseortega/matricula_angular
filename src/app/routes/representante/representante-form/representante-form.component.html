@@ -40,19 +40,23 @@
 
                 <!--columna 2-->
                 <!--<div class="col-sm-6">-->
-                <mat-form-field>
-                  <mat-label>Seleccione la Nacionalidad</mat-label>
-                  <mat-select formControlName="pais_nacionalidad" required [compareWith]="compareObjects">
-                    @for (pais_nacionalidad of pais_nacionalidades$ | async; track pais_nacionalidad) {
-                      <mat-option [value]="pais_nacionalidad">{{pais_nacionalidad.nacionalidad}}</mat-option>
-                    }
-                  </mat-select>
-                  @if(representanteForm.get('nacionalidad')?.hasError('required')){
-                    <mat-error>
-                      Nacionalidad es requerida
-                    </mat-error>
-                  }
-                </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <mat-label>Seleccione la Nacionalidad</mat-label>
+                    <input type="text"
+                           placeholder="Escriba el nombre del país"
+                           aria-label="Number"
+                           matInput
+                           formControlName="pais_nacionalidad"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                      @for (paisNacionalidad of filteredPaisNacionalidades | async; track paisNacionalidad) {
+                        <mat-option [value]="paisNacionalidad">{{paisNacionalidad.nombre_comun}} / {{paisNacionalidad.nacionalidad}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectPaisNacionalidad()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
                     <mat-form-field>
                       <mat-label>Teléfono</mat-label>
                       <input matInput formControlName="telefono">

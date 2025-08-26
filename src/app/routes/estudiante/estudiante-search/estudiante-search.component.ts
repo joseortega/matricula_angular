@@ -64,7 +64,7 @@ export class EstudianteSearchComponent implements OnInit, OnChanges{
     }
 
     displayFn(estudiante: Estudiante): any {
-        return estudiante && estudiante.id ? estudiante.identificacion+' '+estudiante.nombres+' '+estudiante.apellidos : '';
+        return estudiante && estudiante.id ? estudiante.identificacion+' '+estudiante.apellidos+' '+estudiante.nombres : '';
     }
 
     onSelectEstudiante(estudiante: Estudiante){

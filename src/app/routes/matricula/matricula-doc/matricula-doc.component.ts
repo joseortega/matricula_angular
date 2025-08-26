@@ -40,7 +40,14 @@ export class MatriculaDocComponent {
         const link = document.createElement('a');
         link.href = url;
         link.download = 'certificado_matricula.pdf';  // Nombre del archivo PDF
+
+        // Simular click para iniciar descarga
+        document.body.appendChild(link);
         link.click();
+
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       }
     });
   }
@@ -53,7 +60,14 @@ export class MatriculaDocComponent {
         const link = document.createElement('a');
         link.href = url;
         link.download = 'certificado_matricula_asistencia.pdf';  // Nombre del archivo PDF
+
+        // Simular click para iniciar descarga
+        document.body.appendChild(link);
         link.click();
+
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       }
     });
   }
@@ -66,7 +80,14 @@ export class MatriculaDocComponent {
         const link = document.createElement('a');
         link.href = url;
         link.download = 'certificado_preinscripcion.pdf';  // Nombre del archivo PDF
+
+        // Simular click para iniciar descarga
+        document.body.appendChild(link);
         link.click();
+
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       }
     });
   }
@@ -79,7 +100,14 @@ export class MatriculaDocComponent {
         const link = document.createElement('a');
         link.href = url;
         link.download = 'carta_autorizacion.pdf';  // Nombre del archivo PDF
+
+        // Simular click para iniciar descarga
+        document.body.appendChild(link);
         link.click();
+
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       }
     });
   }
@@ -92,7 +120,14 @@ export class MatriculaDocComponent {
         const link = document.createElement('a');
         link.href = url;
         link.download = 'acta_compromiso.pdf';  // Nombre del archivo PDF
+
+        // Simular click para iniciar descarga
+        document.body.appendChild(link);
         link.click();
+
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       }
     });
   }

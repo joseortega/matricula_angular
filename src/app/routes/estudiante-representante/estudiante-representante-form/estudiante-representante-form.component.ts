@@ -79,7 +79,7 @@ export class EstudianteRepresentanteFormComponent implements OnInit, OnChanges{
     }
 
     displayFn(representante: Representante): any {
-        return representante && representante.id ? representante.identificacion+' '+representante.nombres+' '+representante.apellidos : '';
+        return representante && representante.id ? representante.identificacion+' '+representante.apellidos+' '+representante.nombres : '';
     }
 
     clearSelectRepresentante(): void{

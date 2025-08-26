@@ -15,24 +15,27 @@ import {MY_DATE_FORMATS} from "../../../my-date-formats";
 import {SEXO} from "../../../models/sexo";
 import {Pais} from "../../../models/pais";
 import {notNullValidator} from "../../../validators/not-null-validator";
-import {Observable} from "rxjs";
+import {Observable, startWith, switchMap} from "rxjs";
 import {PaisService} from "../../../services/pais.service";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 
 @Component({
   selector: 'app-representante-form',
   standalone: true,
   imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        AsyncPipe,
-        MatCardModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatIconModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    AsyncPipe,
+    MatCardModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatAutocomplete,
+    MatAutocompleteTrigger
   ],
   templateUrl: './representante-form.component.html',
   styleUrl: './representante-form.component.css',
@@ -45,7 +48,7 @@ import {PaisService} from "../../../services/pais.service";
 })
 export class RepresentanteFormComponent implements OnInit, OnChanges {
 
-    public pais_nacionalidades$: Observable<Pais[]> = new Observable<Pais[]>;
+    filteredPaisNacionalidades: Observable<Pais[]> | undefined = new Observable<Pais[]>;
 
     @Input() representante: Representante= new Representante();
     @Output() submittedEvent = new EventEmitter<Representante>();
@@ -56,18 +59,30 @@ export class RepresentanteFormComponent implements OnInit, OnChanges {
        apellidos: new FormControl<string>('', Validators.required),
        nombres: new FormControl<string>('', Validators.required),
        sexo: new FormControl<any>('', Validators.required),
-      fecha_nacimiento:  new FormControl<Date | string | null>(null,  Validators.required),
+       fecha_nacimiento:  new FormControl<Date | string | null>(null,  Validators.required),
        pais_nacionalidad: new FormControl<Pais>(new Pais(), [Validators.required, notNullValidator()]),
        direccion: new FormControl<string>(''),
        telefono: new FormControl<string>(''),
        correo: new FormControl<string>(''),
     });
 
-    constructor(private datePipe: DatePipe, private  paisService: PaisService,){
+    constructor(private datePipe: DatePipe,
+                private  paisService: PaisService,){
     }
 
     ngOnInit() {
-      this.pais_nacionalidades$ = this.paisService.getList();
+      this.filteredPaisNacionalidades = this.representanteForm.get('pais_nacionalidad')?.valueChanges.pipe(
+        startWith(''),
+        switchMap(value => this.paisService.getSearch(value as string || '')),
+      );
+    }
+
+    displayFn(pais_nacionalidad: Pais): any {
+      return pais_nacionalidad && pais_nacionalidad.id ? pais_nacionalidad.nombre_comun+' / '+pais_nacionalidad.nacionalidad : '';
+    }
+
+    clearSelectPaisNacionalidad(): void{
+      this.representanteForm.get('pais_nacionalidad')?.setValue(null);
     }
 
   submit(): void{
@@ -77,7 +92,7 @@ export class RepresentanteFormComponent implements OnInit, OnChanges {
     }
 
      ngOnChanges(changes: SimpleChanges) {
-        if (changes['representante']) {
+        if (changes.representante) {
             if (changes.representante.currentValue) {
                 this.representanteForm.patchValue(this.representante);
             }

@@ -10,7 +10,7 @@ export class Representante {
     direccion: string | undefined;
     telefono: string | undefined;
     correo: string | undefined;
-    pais_nacionalidad: Pais;
+    pais_nacionalidad?: Pais;
 
     constructor(){
       this.pais_nacionalidad = new Pais();

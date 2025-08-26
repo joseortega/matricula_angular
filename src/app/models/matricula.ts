@@ -20,7 +20,7 @@ export class Matricula {
    estado_matricula: EstadoMatricula;
    fecha_cambio_estado: Date | string | null;
    inscrito_sistema_publico: boolean;
-   matricula_automatica:boolean;
+   inscripcion_automatica :boolean;
    legalizada: boolean;
    promovida: boolean;
    observacion: string | undefined;
@@ -37,7 +37,7 @@ export class Matricula {
        this.estado_matricula = new EstadoMatricula();
        this.fecha_cambio_estado = new Date();
        this.inscrito_sistema_publico = false;
-       this.matricula_automatica = false;
+       this.inscripcion_automatica = false;
        this.legalizada = false;
        this.promovida = false;
     }

@@ -30,6 +30,14 @@
             <span matListItemTitle>{{matricula.paralelo.descripcion}}</span>
             <span matListItemLine>Paralelo</span>
           </mat-list-item>
+          <mat-list-item>
+            @if(matricula.inscripcion_automatica){
+              <span matListItemTitle>SI</span>
+            } @else {
+              <span matListItemTitle>NO</span>
+            }
+            <span matListItemLine>Inscripción automática</span>
+          </mat-list-item>
         </mat-list>
       </div>
       <div class="col-sm-6">

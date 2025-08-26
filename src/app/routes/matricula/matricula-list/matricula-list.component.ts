@@ -59,12 +59,18 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     public matriculas: Matricula[] = [];
 
     //filters
-    matriculaFilter: MatriculaFilter = {grado_escolar: new GradoEscolar(),periodo_lectivo: new PeriodoLectivo(), paralelo: new Paralelo(), estado_matricula: new EstadoMatricula(), search_term: ''};
+    matriculaFilter: MatriculaFilter = {
+      grado_escolar: new GradoEscolar(),
+      periodo_lectivo: new PeriodoLectivo(),
+      paralelo: new Paralelo(),
+      estado_matriculas: [],
+      search_term: ''};
+
     matriculaFilterForm = new FormGroup({
         periodo_lectivo: new FormControl<PeriodoLectivo>(new PeriodoLectivo()),
         grado_escolar: new FormControl<GradoEscolar>(new GradoEscolar()),
         paralelo: new FormControl<Paralelo>(new Paralelo()),
-        estado_matricula: new FormControl<EstadoMatricula>(new EstadoMatricula()),
+        estado_matriculas: new FormControl([]),
         search_term: new FormControl('')
     });
 
@@ -149,6 +155,7 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
     }
 
     search():void{
+
         this.getMatriculaList();
     }
 
@@ -164,7 +171,7 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
             periodo_lectivo: formValues.periodo_lectivo,
             grado_escolar: formValues.grado_escolar,
             paralelo: formValues.paralelo,
-            estado_matricula: formValues.estado_matricula,
+            estado_matriculas: formValues.estado_matriculas,
             search_term: formValues.search_term
         };
         //reseteamos la pagina a 0
@@ -182,7 +189,14 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
           const link = document.createElement('a');
           link.href = url;
           link.download = 'matricula_list.pdf';  // Nombre del archivo PDF
+
+          // Simular click para iniciar descarga
+          document.body.appendChild(link);
           link.click();
+
+          // Limpiar
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
         }
       });
     }

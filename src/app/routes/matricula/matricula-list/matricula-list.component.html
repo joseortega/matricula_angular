@@ -47,8 +47,7 @@
         <div class="col-sm-4">
           <mat-form-field>
             <mat-label>Estado</mat-label>
-            <mat-select formControlName="estado_matricula">
-              <mat-option>--</mat-option>
+            <mat-select formControlName="estado_matriculas" multiple>
               @for (estado_matricula of estado_matriculas$ | async; track estado_matricula) {
                 <mat-option [value]="estado_matricula">{{estado_matricula.descripcion}}</mat-option>
               }

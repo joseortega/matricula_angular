@@ -157,8 +157,10 @@ export class MatriculaService {
     if (matriculaFilter.grado_escolar && matriculaFilter.grado_escolar.id !== undefined) {
       params = params.append('grado_escolar', matriculaFilter.grado_escolar.id.toString());
     }
-    if (matriculaFilter.estado_matricula && matriculaFilter.estado_matricula.id !== undefined) {
-      params = params.append('estado_matricula', matriculaFilter.estado_matricula.id.toString());
+    if (matriculaFilter.estado_matriculas && matriculaFilter.estado_matriculas.length > 0) {
+      const ids = matriculaFilter.estado_matriculas.map(est => est.id).join(',');
+      params = params.append('estado_matriculas', ids);
+      // 👉 genera algo como estado_matriculas=1,2,3
     }
     if (matriculaFilter.paralelo && matriculaFilter.paralelo.id !== undefined) {
       params = params.append('paralelo', matriculaFilter.paralelo.id.toString());

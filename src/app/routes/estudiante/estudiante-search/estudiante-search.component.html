@@ -9,7 +9,7 @@
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             @for (estudiante of filteredEstudiantes | async; track estudiante) {
-              <mat-option [value]="estudiante" (onSelectionChange)="onSelectEstudiante(estudiante)">{{estudiante.identificacion}} {{estudiante.nombres}} {{estudiante.apellidos}}</mat-option>
+              <mat-option [value]="estudiante" (onSelectionChange)="onSelectEstudiante(estudiante)">{{estudiante.identificacion}} {{estudiante.apellidos}} {{estudiante.nombres}}</mat-option>
             }
         </mat-autocomplete>
         @if(estudiante.id && !isInputSearchDisabled){

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core';
 import { AdminLayoutComponent } from '@theme/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from '@theme/auth-layout/auth-layout.component';
+import {MatriculaListComponent} from "./routes/matricula/matricula-list/matricula-list.component";
 
 export const routes: Routes = [
   {
@@ -11,16 +12,7 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
     children: [
       { path: '', redirectTo: 'matricula', pathMatch: 'full' },
-      {
-        path: 'dashboard',
-        loadComponent: () => import('./routes/dashboard/dashboard.component')
-          .then(c => c.DashboardComponent)
-      },
-      {
-        path: 'matricula',
-        loadComponent: () => import('./routes/matricula/matricula-list/matricula-list.component')
-          .then(c => c.MatriculaListComponent)
-      },
+      { path: 'matricula', component: MatriculaListComponent },
       {
         path: 'matricula/dashboard/new',
         loadComponent: () => import('./routes/matricula/matricula-dashboard/matricula-dashboard.component')

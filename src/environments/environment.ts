@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://api.matricula.localhost/api',
+  //baseUrl: 'http://api.matricula.localhost/api',
+  baseUrl: 'http://127.0.0.1:8000/api',
   useHash: false,
 };
 
