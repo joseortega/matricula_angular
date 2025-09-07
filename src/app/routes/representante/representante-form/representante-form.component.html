@@ -36,6 +36,15 @@
                       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Estado Civil</mat-label>
+                      <mat-select formControlName="estado_civil" [compareWith]="compareObjects">
+                        @for (estadoCivil of estadoCiviles$ | async; track estadoCivil) {
+                          <mat-option [value]="estadoCivil">{{estadoCivil.descripcion}}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
                 <!--</div>-->
 
                 <!--columna 2-->
@@ -74,6 +83,10 @@
                                autocomplete="not-complete"
                                placeholder="pat@example.com"
                                formControlName="correo">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Observación</mat-label>
+                      <textarea matInput placeholder="Escriba cualquier observación, Ej. Falta doc" formControlName="observacion"></textarea>
                     </mat-form-field>
                 <!--</div>-->
            <!-- </div>-->

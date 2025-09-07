@@ -16,6 +16,7 @@ export class Estudiante {
     uniforme_talla: UniformeTalla | undefined | null;
     pais_nacionalidad?: Pais;
     expediente: Expediente | undefined;
+    observacion: string | undefined;
     constructor(){
         this.pais_nacionalidad = new Pais();
         this.fecha_nacimiento = null;

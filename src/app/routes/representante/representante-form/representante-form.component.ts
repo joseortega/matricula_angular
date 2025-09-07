@@ -18,6 +18,8 @@ import {notNullValidator} from "../../../validators/not-null-validator";
 import {Observable, startWith, switchMap} from "rxjs";
 import {PaisService} from "../../../services/pais.service";
 import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {EstadoCivil} from "../../../models/estadoCivil";
+import {EstadoCivilService} from "../../../services/estado-civil.service";
 
 @Component({
   selector: 'app-representante-form',
@@ -49,6 +51,7 @@ import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocom
 export class RepresentanteFormComponent implements OnInit, OnChanges {
 
     filteredPaisNacionalidades: Observable<Pais[]> | undefined = new Observable<Pais[]>;
+    public estadoCiviles$: Observable<EstadoCivil[]> = new Observable<EstadoCivil[]>();
 
     @Input() representante: Representante= new Representante();
     @Output() submittedEvent = new EventEmitter<Representante>();
@@ -60,14 +63,17 @@ export class RepresentanteFormComponent implements OnInit, OnChanges {
        nombres: new FormControl<string>('', Validators.required),
        sexo: new FormControl<any>('', Validators.required),
        fecha_nacimiento:  new FormControl<Date | string | null>(null,  Validators.required),
+       estado_civil: new FormControl<EstadoCivil | null>(null),
        pais_nacionalidad: new FormControl<Pais>(new Pais(), [Validators.required, notNullValidator()]),
        direccion: new FormControl<string>(''),
        telefono: new FormControl<string>(''),
        correo: new FormControl<string>(''),
+       observacion: new FormControl<string>(''),
     });
 
     constructor(private datePipe: DatePipe,
-                private  paisService: PaisService,){
+                private  paisService: PaisService,
+                private estadoCivilService: EstadoCivilService,){
     }
 
     ngOnInit() {
@@ -75,6 +81,8 @@ export class RepresentanteFormComponent implements OnInit, OnChanges {
         startWith(''),
         switchMap(value => this.paisService.getSearch(value as string || '')),
       );
+
+      this.estadoCiviles$ = this.estadoCivilService.getList();
     }
 
     displayFn(pais_nacionalidad: Pais): any {

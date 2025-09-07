@@ -74,6 +74,7 @@ export class EstudianteFormComponent implements OnInit, OnChanges{
        telefono: new FormControl<string>(''),
        correo: new FormControl<string>(''),
        tiene_discapacidad: new FormControl<boolean>(false),
+       observacion: new FormControl<string>(''),
     });
 
     constructor(private paisService: PaisService,

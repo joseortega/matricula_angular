@@ -14,14 +14,18 @@
                       <span matListItemTitle>{{representante.apellidos}}</span>
                       <span matListItemLine>Apellidos</span>
                     </mat-list-item>
-                   <mat-list-item>
-                     <span matListItemTitle>{{representante.nombres}}</span>
-                     <span matListItemLine>Nombres</span>
-                   </mat-list-item>
+                     <mat-list-item>
+                       <span matListItemTitle>{{representante.nombres}}</span>
+                       <span matListItemLine>Nombres</span>
+                     </mat-list-item>
                     <mat-list-item>
-                     <span matListItemTitle>{{representante.fecha_nacimiento}}</span>
-                     <span matListItemLine>Fecha Nacimiento</span>
+                      <span matListItemTitle>{{representante.fecha_nacimiento}}</span>
+                      <span matListItemLine>Fecha Nacimiento</span>
                     </mat-list-item>
+                   <mat-list-item>
+                     <span matListItemTitle>{{representante.estado_civil?.descripcion}}</span>
+                     <span matListItemLine>Estado Civil</span>
+                   </mat-list-item>
               </mat-list>
             </div>
             <div class="col-sm-6">
@@ -42,6 +46,10 @@
                       <span matListItemTitle>{{representante.correo}}</span>
                       <span matListItemLine>Correo</span>
                     </mat-list-item>
+                   <mat-list-item>
+                     <span matListItemTitle>{{representante.observacion}}</span>
+                     <span matListItemLine>Observación</span>
+                   </mat-list-item>
               </mat-list>
             </div>
         </div>
