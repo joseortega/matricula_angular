@@ -2,7 +2,8 @@
 <mat-card>
   <mat-card-actions align="end">
     <a mat-flat-button routerLink="/matricula/dashboard/new" class="m-2">Nueva Matricula</a>
-    <button mat-stroked-button color="primary" (click)="pdfMatriculaList()">Imprimir Lista</button>
+    <button mat-stroked-button color="primary" (click)="pdfMatriculaList()">Exportar Pdf</button>
+    <button mat-stroked-button color="primary" (click)="excelMatriculaList()">Exportar en Excel</button>
   </mat-card-actions>
 
   <mat-divider></mat-divider>
@@ -108,7 +109,7 @@
           @if (matricula.inscrito_sistema_publico) {
             <mat-icon matChipAvatar>check_circle</mat-icon>
           } @else {
-            <mat-icon matChipAvatar>cancel</mat-icon>
+            <mat-icon color="warn" matChipAvatar>cancel</mat-icon>
           }
         </td>
       </ng-container>

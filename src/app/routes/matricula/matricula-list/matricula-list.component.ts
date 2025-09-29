@@ -201,6 +201,26 @@ export class MatriculaListComponent implements OnInit, AfterViewInit  {
       });
     }
 
+  excelMatriculaList(){
+    this.matriculaService.excelMatriculaList(this.matriculaFilter).subscribe({
+      next: data => {
+        // Crear una URL para el Blob y forzar la descarga
+        const url = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'matricula_list.xlsx';  // Nombre del archivo PDF
+
+        // Simular click para iniciar descarga
+        document.body.appendChild(link);
+        link.click();
+
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    });
+  }
+
     /**
      * Compara dos objetos por su ID para el select de Material
      * @param option1 Primer objeto a comparar

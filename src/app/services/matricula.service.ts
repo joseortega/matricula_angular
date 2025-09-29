@@ -148,6 +148,19 @@ export class MatriculaService {
     });
   }
 
+  excelMatriculaList(matriculaFilter: MatriculaFilter): Observable<Blob> {
+
+    let params = new HttpParams();
+    params = this.paramsAppendFilter(matriculaFilter);
+
+    const url = `/excel-matricula-list`;
+
+    return this.http.get(url, {
+      params,
+      responseType: 'blob',
+    });
+  }
+
   private paramsAppendFilter(matriculaFilter: MatriculaFilter): HttpParams{
     let params = new HttpParams();
 

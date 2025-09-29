@@ -11,8 +11,11 @@ export class TranslateLangService {
 
   load() {
     return new Promise<void>(resolve => {
-      const browserLang = navigator.language;
-      const defaultLang = browserLang.match(/es-EC|en-US|zh-CN|zh-TW/) ? browserLang : 'es-EC';
+      //const browserLang = navigator.language;
+      //const defaultLang = browserLang.match(/es-EC|en-US|zh-CN|zh-TW/) ? browserLang : 'es-EC';
+
+      /*modificado para solo idioma español por jose ortega*/
+      const defaultLang = 'es-EC'; // 👈 fuerza siempre español
 
       this.settings.setLanguage(defaultLang);
       this.translate.setDefaultLang(defaultLang);
